@@ -1,0 +1,37 @@
+{
+  "name": "vue-tsx.macro",
+  "version": "0.0.1",
+  "description": "make tsx work for vue2",
+  "main": "dist/index.js",
+  "typings": "types/macro.d.ts",
+  "scripts": {
+    "build": "babel src/index.js -o dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TerenceZ/vue-tsx.macro.git"
+  },
+  "keywords": [
+    "vue",
+    "tsx",
+    "typescript"
+  ],
+  "author": "TerenceZ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TerenceZ/vue-tsx.macro/issues"
+  },
+  "homepage": "https://github.com/TerenceZ/vue-tsx.macro#readme",
+  "peerDependencies": {
+    "babel-plugin-macros": "^2.5.1",
+    "vue": "^2.6.10"
+  },
+  "dependencies": {
+    "csstype": "^2.6.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4"
+  }
+}
