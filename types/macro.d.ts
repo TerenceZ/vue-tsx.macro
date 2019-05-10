@@ -482,7 +482,7 @@ type ExtractJSXUnionChildrenFromMap<T> = [
 type ExtractJSXChildrenFromMap<
   T,
   K = ExtractJSXUnionChildrenFromMap<T>
-> = K extends [infer I] ? I | I[] : never
+> = K extends [infer I] ? I | I[] | undefined : never
 
 type ExtractJSXOneChild<
   T,
