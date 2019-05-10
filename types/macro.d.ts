@@ -445,15 +445,23 @@ type ExtractOneSlot<
   ? (() => I) | undefined
   : () => I
 
-type ExtractDefaultSlot<T, S = ExtractOneSlot<T>> = NonNullable<
-  T
-> extends Function
-  ? T
-  : S extends Unknown
-  ? S
-  : OptionalIfMatch<undefined, S, { default: S }>
+type ExtractDefaultSlotFromType<D> = D extends (Function | undefined)
+  ? D
+  : () => D
 
-type ExtractSlots<T, D = ExtractDefaultSlot<T>> = D extends Unknown
+type ExtractDefaultSlotMap<
+  T,
+  S = ExtractOneSlot<T>,
+  D = T extends Type<infer R> ? R : Unknown
+> = T extends Function
+  ? T
+  : D extends Unknown
+  ? S extends Unknown
+    ? S
+    : OptionalIfMatch<undefined, S, { default: S }>
+  : OptionalIfMatch<undefined, D, { default: ExtractDefaultSlotFromType<D> }>
+
+type ExtractSlots<T, D = ExtractDefaultSlotMap<T>> = D extends Unknown
   ? ExtractSlotsFromMap<T>
   : D & NormalizedSlotMap
 
@@ -479,7 +487,7 @@ type ExtractJSXChildrenFromMap<
 type ExtractJSXOneChild<
   T,
   S = ExtractOneSlot<T>,
-  F = NonNullable<S> extends (...args: any[]) => infer R ? R : Unknown
+  F = S extends (...args: any[]) => infer R ? R : Unknown
 > = undefined extends S ? F | undefined : F
 
 type ExtractJSXSingleChild<
@@ -487,7 +495,7 @@ type ExtractJSXSingleChild<
   I = InferredType<T>,
   R = ExtractSlotType<T>,
   A = ExtractSlotArg<T>
-> = NonNullable<T> extends Function
+> = T extends Function
   ? T
   : I extends Unknown
   ? T extends ({ type: infer R_ } | { arg: infer A_ })
