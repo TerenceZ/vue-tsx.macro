@@ -428,7 +428,7 @@ type ExtractSlotArg<T> = T extends { arg: infer A }
   ? InferredOrSelfType<A>
   : Unknown
 
-type ConstrucotSlot<A, R> = A extends Unknown ? () => R : (props: A) => R
+type ConstructSlot<A, R> = A extends Unknown ? () => R : (props: A) => R
 
 type ExtractOneSlot<
   T,
@@ -438,9 +438,11 @@ type ExtractOneSlot<
 > = I extends Unknown
   ? T extends ({ type: infer R_ } | { arg: infer A_ })
     ? T extends { required: boolean }
-      ? ConstrucotSlot<A, R>
-      : ConstrucotSlot<A, R> | undefined
+      ? ConstructSlot<A, R>
+      : ConstructSlot<A, R> | undefined
     : Unknown
+  : T extends { required: boolean }
+  ? () => SlotType
   : undefined extends I
   ? (() => I) | undefined
   : () => I
@@ -454,7 +456,7 @@ type ExtractDefaultSlotMap<
   S = ExtractOneSlot<T>,
   D = T extends Type<infer R> ? R : Unknown
 > = T extends Function
-  ? T
+  ? { default: T }
   : D extends Unknown
   ? S extends Unknown
     ? S
@@ -493,15 +495,18 @@ type ExtractJSXOneChild<
 type ExtractJSXSingleChild<
   T,
   I = InferredType<T>,
-  R = ExtractSlotType<T>,
-  A = ExtractSlotArg<T>
+  R = ExtractSlotType<T>
 > = T extends Function
   ? T
   : I extends Unknown
-  ? T extends ({ type: infer R_ } | { arg: infer A_ })
+  ? T extends { type: infer R_ }
     ? T extends { required: boolean }
-      ? ConstrucotSlot<A, R>
-      : ConstrucotSlot<A, R> | undefined
+      ? R
+      : R | undefined
+    : T extends ({ arg: infer A_ } | { required: boolean })
+    ? T extends { required: boolean }
+      ? NonNullable<SlotType>
+      : SlotType
     : T
   : I
 
@@ -510,6 +515,8 @@ type ExtractJSXChildren<T, C = ExtractJSXSingleChild<T>> = T extends None
   : C extends Unknown
   ? ExtractJSXChildrenFromMap<T>
   : C
+
+type P = ExtractJSXChildren<(() => number) | number | undefined>
 
 /// Utils
 
