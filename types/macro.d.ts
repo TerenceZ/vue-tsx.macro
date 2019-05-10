@@ -424,7 +424,7 @@ type ExtractSlotType<T> = T extends { type: infer R }
   ? InferredOrSelfType<R>
   : SlotType
 
-type ExtractSlotArg<T> = T extends { arg: infer A }
+type ExtractSlotScopeArg<T> = T extends { scope: infer A }
   ? InferredOrSelfType<A>
   : Unknown
 
@@ -434,9 +434,9 @@ type ExtractOneSlot<
   T,
   I = InferredType<T>,
   R = ExtractSlotType<T>,
-  A = ExtractSlotArg<T>
+  A = ExtractSlotScopeArg<T>
 > = I extends Unknown
-  ? T extends ({ type: infer R_ } | { arg: infer A_ })
+  ? T extends ({ type: infer R_ } | { scope: infer A_ })
     ? T extends { required: boolean }
       ? ConstructSlot<A, R>
       : ConstructSlot<A, R> | undefined
@@ -501,7 +501,7 @@ type ExtractJSXSingleChild<
     ? T extends { required: boolean }
       ? R
       : R | undefined
-    : T extends ({ arg: infer A_ } | { required: boolean })
+    : T extends ({ scope: infer A_ } | { required: boolean })
     ? T extends { required: boolean }
       ? NonNullable<SlotType>
       : SlotType
