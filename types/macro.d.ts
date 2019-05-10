@@ -396,7 +396,7 @@ type ExtractEventEmitter<V, E> = UnionToIntersection<
 
 type NormalizedSlotMap = Record<string, NormalizedScopedSlot | undefined>
 
-type SimpleSlotType = string | boolean | number | VNode
+type SimpleSlotType = string | boolean | VNode
 
 type SlotType = SimpleSlotType | VNode[] | undefined
 
@@ -441,8 +441,6 @@ type ExtractOneSlot<
       ? ConstructSlot<A, R>
       : ConstructSlot<A, R> | undefined
     : Unknown
-  : T extends { required: boolean }
-  ? () => SlotType
   : undefined extends I
   ? (() => I) | undefined
   : () => I
@@ -507,7 +505,7 @@ type ExtractJSXSingleChild<
     ? T extends { required: boolean }
       ? NonNullable<SlotType>
       : SlotType
-    : T
+    : Unknown
   : I
 
 type ExtractJSXChildren<T, C = ExtractJSXSingleChild<T>> = T extends None
@@ -515,8 +513,6 @@ type ExtractJSXChildren<T, C = ExtractJSXSingleChild<T>> = T extends None
   : C extends Unknown
   ? ExtractJSXChildrenFromMap<T>
   : C
-
-type P = ExtractJSXChildren<(() => number) | number | undefined>
 
 /// Utils
 
@@ -534,11 +530,18 @@ type OptionalIfNotMatch<T, C, R> = T extends C ? R : Optional<R>
 
 type ExtractArgs<T> = T extends (...args: infer A) => any ? A : never
 
+type VChildren = SlotType
+
+declare const VChildren: SlotType
+
+declare const VNode: VNode
+
 export {
   component,
   functional,
   type,
-  SlotType,
+  VChildren,
+  VNode,
   SLOT_TYPES,
   EVENT_TYPES,
   STATE_TYPES,
