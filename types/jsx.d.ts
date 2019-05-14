@@ -293,7 +293,7 @@ declare global {
     type DOMJSXChildrenType = DOMJSXPrimaryChildType | DOMJSXPrimaryChildType[]
 
     interface DOMAttributes {
-      '#children'?: DOMJSXChildrenType
+      '#children'?: DOMJSXChildrenType | DOMJSXChildrenType[]
       on?: {
         [K in keyof NativeEventHandlerMap]:
           | NativeEventHandlerMap[K]
