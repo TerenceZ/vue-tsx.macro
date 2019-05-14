@@ -66,15 +66,16 @@ function transformJSXComponent(_ref) {
 
       if (renderPath.isFunction()) {
         var renderScope = renderPath.get('body').scope;
+        var paramName = renderPath.get('params.0');
 
-        if (renderScope.hasBinding('h') && !renderPath.get('params.0').isIdentifier({
+        if (renderScope.hasBinding('h') && !(paramName && paramName.isIdentifier({
           name: 'h'
-        })) {
+        }))) {
           throw new MacroError("Vue will inject 'h' identifier when parsing JSX, don't define local var'h'.");
         } // insert the param 'h'.
 
 
-        renderPath.get('params.0').insertBefore(t.identifier('h'));
+        renderPath.node.params.unshift(t.identifier('h'));
       } // Well, check the argument.0 for functional is object expression
       // and replace functional(def) to def.
 
@@ -220,6 +221,10 @@ function transformJSXComponent(_ref) {
   }
 
   function transformTSTypeToVueAllowedType(typePath) {
+    if (!typePath) {
+      return t.unaryExpression('void', t.numericLiteral(0));
+    }
+
     switch (true) {
       case typePath.isTSNumberKeyword():
         return t.identifier('Number');

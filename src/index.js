@@ -71,11 +71,15 @@ function transformJSXComponent({ references, babel: { types: t } }) {
 
       if (renderPath.isFunction()) {
         const renderScope = renderPath.get('body').scope
+        const paramName = renderPath.get('params.0')
         if (
           renderScope.hasBinding('h') &&
-          !renderPath.get('params.0').isIdentifier({
-            name: 'h',
-          })
+          !(
+            paramName &&
+            paramName.isIdentifier({
+              name: 'h',
+            })
+          )
         ) {
           throw new MacroError(
             `Vue will inject 'h' identifier when parsing JSX, don't define local var'h'.`,
@@ -83,7 +87,7 @@ function transformJSXComponent({ references, babel: { types: t } }) {
         }
 
         // insert the param 'h'.
-        renderPath.get('params.0').insertBefore(t.identifier('h'))
+        renderPath.node.params.unshift(t.identifier('h'))
       }
 
       // Well, check the argument.0 for functional is object expression
@@ -243,6 +247,10 @@ function transformJSXComponent({ references, babel: { types: t } }) {
   }
 
   function transformTSTypeToVueAllowedType(typePath) {
+    if (!typePath) {
+      return t.unaryExpression('void', t.numericLiteral(0))
+    }
+
     switch (true) {
       case typePath.isTSNumberKeyword():
         return t.identifier('Number')
