@@ -32,6 +32,16 @@ declare global {
       }
     }
 
+    type ReplaceWithScopedSlotReturnValue<T> = T extends (
+      ...args: infer A
+    ) => any
+      ? (...args: A) => ScopedSlotReturnValue
+      : T
+
+    type TransformToScopedSlotMap<T> = {
+      [K in keyof T]: ReplaceWithScopedSlotReturnValue<T[K]>
+    }
+
     interface ClassAttributes<T> extends Attributes {
       class?: ClassNames
       staticClass?: string
@@ -39,7 +49,9 @@ declare global {
 
       // data
       on?: T extends { $listeners: infer L } ? L : {}
-      scopedSlots?: T extends { $scopedSlots: infer S } ? S : {}
+      scopedSlots?: T extends { $scopedSlots: infer S }
+        ? TransformToScopedSlotMap<S>
+        : {}
       attrs?: Record<string, string | number | boolean>
       props?: T extends { '#props': infer P } ? P : {}
       domProps?: Record<string, string | number | boolean>
