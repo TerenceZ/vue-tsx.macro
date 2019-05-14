@@ -2,7 +2,7 @@
 
 import * as CSS from 'csstype'
 import Vue, { VNode } from 'vue'
-import { NormalizedScopedSlot } from 'vue/types/vnode'
+import { ScopedSlotReturnValue } from 'vue/types/vnode'
 
 declare module 'vue/types/vue' {
   interface Vue {
@@ -282,13 +282,8 @@ declare global {
       transitionEndCapture?: TransitionEventHandler
     }
 
-    type JSXNode = VNode | string | boolean | undefined
-
-    interface RecursiveArray<T> extends Array<T | RecursiveArray<T>> {}
-    interface ListOrReursiveArray<T> extends Array<T | RecursiveArray<T>> {}
-
     interface DOMAttributes {
-      '#children'?: JSXNode | ListOrReursiveArray<JSXNode>
+      '#children'?: ScopedSlotReturnValue
       on?: {
         [K in keyof NativeEventHandlerMap]:
           | NativeEventHandlerMap[K]
