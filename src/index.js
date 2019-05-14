@@ -274,23 +274,19 @@ function transformJSXComponent({ references, babel: { types: t } }) {
   function transformInjections(paths) {
     paths.forEach(defPath => {
       const parentPath = defPath.parentPath
-      if (!parentPath.isObjectProperty()) {
-        throw new MacroError(
-          '"INJECTIONS: ObjectExpression" is expected, but no object properties found.',
-        )
-      }
-
-      if (parentPath.get('value').isObjectExpression()) {
-        parentPath.get('value.properties').forEach(p => {
-          if (p.get('value').isObjectExpression()) {
-            const type = p
-              .get('value.properties')
-              .find(p => !p.node.computed && p.node.key.name === 'type')
-            if (type) {
-              type.remove()
+      if (parentPath.isObjectProperty()) {
+        if (parentPath.get('value').isObjectExpression()) {
+          parentPath.get('value.properties').forEach(p => {
+            if (p.get('value').isObjectExpression()) {
+              const type = p
+                .get('value.properties')
+                .find(p => !p.node.computed && p.node.key.name === 'type')
+              if (type) {
+                type.remove()
+              }
             }
-          }
-        })
+          })
+        }
       }
 
       if (
@@ -298,7 +294,23 @@ function transformJSXComponent({ references, babel: { types: t } }) {
           .get('properties')
           .find(p => !p.computed && p.node.key.name === 'inject')
       ) {
-        throw new MacroError('[INJECTION] cannot be used with inject.')
+        const mixins = parentPath.parentPath
+          .get('properties')
+          .find(p => !p.computed && p.node.key.name === 'mixins')
+
+        const mixin = t.objectExpression([
+          t.objectProperty(t.identifier('inject'), parentPath.node.value),
+        ])
+        if (mixins) {
+          mixins.node.elements.push(mixin)
+        } else {
+          parentPath.parentPath.node.properties.push(
+            t.objectProperty(
+              t.identifier('mixins'),
+              t.arrayExpression([mixin]),
+            ),
+          )
+        }
       } else {
         parentPath.replaceWith(
           t.objectProperty(t.identifier('inject'), parentPath.node.value),

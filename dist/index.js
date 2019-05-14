@@ -259,28 +259,35 @@ function transformJSXComponent(_ref) {
     paths.forEach(function (defPath) {
       var parentPath = defPath.parentPath;
 
-      if (!parentPath.isObjectProperty()) {
-        throw new MacroError('"INJECTIONS: ObjectExpression" is expected, but no object properties found.');
-      }
+      if (parentPath.isObjectProperty()) {
+        if (parentPath.get('value').isObjectExpression()) {
+          parentPath.get('value.properties').forEach(function (p) {
+            if (p.get('value').isObjectExpression()) {
+              var type = p.get('value.properties').find(function (p) {
+                return !p.node.computed && p.node.key.name === 'type';
+              });
 
-      if (parentPath.get('value').isObjectExpression()) {
-        parentPath.get('value.properties').forEach(function (p) {
-          if (p.get('value').isObjectExpression()) {
-            var type = p.get('value.properties').find(function (p) {
-              return !p.node.computed && p.node.key.name === 'type';
-            });
-
-            if (type) {
-              type.remove();
+              if (type) {
+                type.remove();
+              }
             }
-          }
-        });
+          });
+        }
       }
 
       if (parentPath.parentPath.get('properties').find(function (p) {
         return !p.computed && p.node.key.name === 'inject';
       })) {
-        throw new MacroError('[INJECTION] cannot be used with inject.');
+        var mixins = parentPath.parentPath.get('properties').find(function (p) {
+          return !p.computed && p.node.key.name === 'mixins';
+        });
+        var mixin = t.objectExpression([t.objectProperty(t.identifier('inject'), parentPath.node.value)]);
+
+        if (mixins) {
+          mixins.node.elements.push(mixin);
+        } else {
+          parentPath.parentPath.node.properties.push(t.objectProperty(t.identifier('mixins'), t.arrayExpression([mixin])));
+        }
       } else {
         parentPath.replaceWith(t.objectProperty(t.identifier('inject'), parentPath.node.value));
       }
