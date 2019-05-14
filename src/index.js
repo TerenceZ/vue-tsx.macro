@@ -9,9 +9,10 @@ function transformJSXComponent({ references, babel: { types: t } }) {
     component: transformComponent,
     functional: transformFunctional,
     type: transformType,
-    EVENT_TYPES: removeTypes('EVENT_TYPES'),
-    STATE_TYPES: removeTypes('STATE_TYPES'),
-    SLOT_TYPES: removeTypes('SLOT_TYPES'),
+    EVENTS: removeTypes('EVENTS'),
+    STATES: removeTypes('STATES'),
+    SCOPED_SLOTS: removeTypes('SCOPED_SLOTS'),
+    INJECTIONS: transformInjections,
   }
 
   const typeAlias =
@@ -268,5 +269,41 @@ function transformJSXComponent({ references, babel: { types: t } }) {
       default:
         return t.unaryExpression('void', t.numericLiteral(0))
     }
+  }
+
+  function transformInjections(paths) {
+    paths.forEach(defPath => {
+      const parentPath = defPath.parentPath
+      if (!parentPath.isObjectProperty()) {
+        throw new MacroError(
+          '"INJECTIONS: ObjectExpression" is expected, but no object properties found.',
+        )
+      }
+
+      if (parentPath.get('value').isObjectExpression()) {
+        parentPath.get('value.properties').forEach(p => {
+          if (p.get('value').isObjectExpression()) {
+            const type = p
+              .get('value.properties')
+              .find(p => !p.node.computed && p.node.key.name === 'type')
+            if (type) {
+              type.remove()
+            }
+          }
+        })
+      }
+
+      if (
+        parentPath.parentPath
+          .get('properties')
+          .find(p => !p.computed && p.node.key.name === 'inject')
+      ) {
+        throw new MacroError('[INJECTION] cannot be used with inject.')
+      } else {
+        parentPath.replaceWith(
+          t.objectProperty(t.identifier('inject'), parentPath.node.value),
+        )
+      }
+    })
   }
 }

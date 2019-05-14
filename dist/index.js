@@ -13,9 +13,10 @@ function transformJSXComponent(_ref) {
     component: transformComponent,
     functional: transformFunctional,
     type: transformType,
-    EVENT_TYPES: removeTypes('EVENT_TYPES'),
-    STATE_TYPES: removeTypes('STATE_TYPES'),
-    SLOT_TYPES: removeTypes('SLOT_TYPES')
+    EVENTS: removeTypes('EVENTS'),
+    STATES: removeTypes('STATES'),
+    SCOPED_SLOTS: removeTypes('SCOPED_SLOTS'),
+    INJECTIONS: transformInjections
   };
   var typeAlias = references['type'] && references['type'].length && references['type'][0].node.name;
 
@@ -252,5 +253,37 @@ function transformJSXComponent(_ref) {
       default:
         return t.unaryExpression('void', t.numericLiteral(0));
     }
+  }
+
+  function transformInjections(paths) {
+    paths.forEach(function (defPath) {
+      var parentPath = defPath.parentPath;
+
+      if (!parentPath.isObjectProperty()) {
+        throw new MacroError('"INJECTIONS: ObjectExpression" is expected, but no object properties found.');
+      }
+
+      if (parentPath.get('value').isObjectExpression()) {
+        parentPath.get('value.properties').forEach(function (p) {
+          if (p.get('value').isObjectExpression()) {
+            var type = p.get('value.properties').find(function (p) {
+              return !p.node.computed && p.node.key.name === 'type';
+            });
+
+            if (type) {
+              type.remove();
+            }
+          }
+        });
+      }
+
+      if (parentPath.parentPath.get('properties').find(function (p) {
+        return !p.computed && p.node.key.name === 'inject';
+      })) {
+        throw new MacroError('[INJECTION] cannot be used with inject.');
+      } else {
+        parentPath.replaceWith(t.objectProperty(t.identifier('inject'), parentPath.node.value));
+      }
+    });
   }
 }

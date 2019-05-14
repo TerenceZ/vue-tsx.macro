@@ -2,24 +2,27 @@
 
 import Vue, { ComponentOptions } from 'vue'
 import {
-  ComputedOptions,
-  RecordPropsDefinition,
   DataDef,
   PropOptions,
   Constructor,
-  FunctionalComponentOptions,
   RenderContext,
   InjectOptions,
-  PropsDefinition,
 } from 'vue/types/options'
 import { CombinedVueInstance, VueConstructor } from 'vue/types/vue'
-import { NormalizedScopedSlot, VNode } from 'vue/types/vnode'
+import {
+  NormalizedScopedSlot,
+  VNode,
+  ScopedSlotChildren,
+} from 'vue/types/vnode'
 
-declare const EVENT_TYPES: '#eventTypes'
+declare const STATES: unique symbol
+declare const EVENTS: unique symbol
+declare const INJECTIONS: unique symbol
+declare const SCOPED_SLOTS: unique symbol
 
-declare const SLOT_TYPES: '#slotTypes'
-
-declare const STATE_TYPES: '#stateTypes'
+declare const TYPE_KEY: unique symbol
+declare const NONE_KEY: unique symbol
+declare const UNKNOWN_KEY: unique symbol
 
 declare function component<
   Data,
@@ -29,125 +32,166 @@ declare function component<
   Extends,
   PropsDef,
   EventsDef,
-  SlotsDef = None,
-  StateDef = {}
+  ScopedSlotsDef = None,
+  StatesDef = {},
+  InjectionsDef = {}
 >(
   definition: ThisTypedComponentDefinitions<
     PropsDef,
     EventsDef,
-    SlotsDef,
+    ScopedSlotsDef,
     Data,
     Methods,
     Computed,
     Mixins,
     Extends,
-    StateDef
+    StatesDef,
+    InjectionsDef
   >,
 ): ComponentConstructor<
   PropsDef,
   EventsDef,
-  SlotsDef,
+  ScopedSlotsDef,
   Data,
   Methods,
   Computed,
   Mixins,
   Extends,
-  StateDef
+  StatesDef,
+  InjectionsDef
 >
 
-declare function functional<PropsDef, EventsDef, SlotsDef = None>(
-  definition: FunctionalComponentDefinition<PropsDef, EventsDef, SlotsDef>,
-): FunctionalComponentConstructor<PropsDef, EventsDef, SlotsDef>
+declare function functional<
+  PropsDef,
+  EventsDef,
+  ScopedSlotsDef = None,
+  InjectionsDef = {}
+>(
+  definition: FunctionalComponentDefinition<
+    PropsDef,
+    EventsDef,
+    ScopedSlotsDef,
+    InjectionsDef
+  >,
+): FunctionalComponentConstructor<
+  PropsDef,
+  EventsDef,
+  ScopedSlotsDef,
+  InjectionsDef
+>
 
 declare function functional<Props = Record<string, any>>(
-  render: FunctionalRender<Props, NormalizedListenerMap, NormalizedSlotMap>,
-): FunctionalComponentConstructor<Props, {}, SlotType>
+  render: FunctionalRender<
+    Props,
+    NormalizedListenerMap,
+    NormalizedScopedSlotMap,
+    Record<string, any>
+  >,
+): FunctionalComponentConstructor<Props, {}, {}, {}>
 
 type MixedJSXVueInstance<
   PropsDef,
   EventsDef,
-  SlotsDef,
+  ScopedSlotsDef,
   Data,
   Methods,
   Computed,
   Mixins,
   Extends,
-  StateDef,
-  Props = ExtractPropsFromDef<PropsDef>,
+  StatesDef,
+  InjectionsDef,
+  Props = ExtractProps<PropsDef>,
   V extends Vue = JSXVue<
     Data,
     Readonly<Props>,
     Readonly<ExtractListeners<EventsDef>>,
-    Readonly<ExtractSlots<SlotsDef>>,
+    Readonly<ExtractScopedSlots<ScopedSlotsDef>>,
     EventsDef,
     ExtractJSXProps<PropsDef>,
-    ExtractJSXChildren<SlotsDef>
+    ExtractJSXChildren<ScopedSlotsDef>
   >
 > = CombinedVueInstance<V, Data, Methods, Computed, Props> &
-  ExtractState<StateDef> &
+  ExtractStates<StatesDef> &
+  ExtractInjections<InjectionsDef> &
   ExtractInstance<Extends> &
   ExtractMixinsInstance<Mixins> & { [key: string]: any }
 
 interface ComponentConstructor<
   PropsDef,
   EventsDef,
-  SlotsDef,
+  ScopedSlotsDef,
   Data,
   Methods,
   Computed,
   Mixins,
   Extends,
-  StateDef
+  StatesDef,
+  InjectionsDef
 >
   extends JSXVueConstructor<
     PropsDef,
     EventsDef,
-    SlotsDef,
+    ScopedSlotsDef,
     Data,
     Methods,
     Computed,
     Mixins,
     Extends,
-    StateDef
+    StatesDef,
+    InjectionsDef
   > {}
 
 type FunctionalComponentConstructor<
   PropsDef,
   EventsDef,
-  SlotsDef
-> = ComponentConstructor<PropsDef, EventsDef, SlotsDef, {}, {}, {}, [], {}, {}>
+  ScopedSlotsDef,
+  InjectionsDef
+> = ComponentConstructor<
+  PropsDef,
+  EventsDef,
+  ScopedSlotsDef,
+  {},
+  {},
+  {},
+  [],
+  {},
+  {},
+  InjectionsDef
+>
 
 interface JSXVueConstructor<
   PropsDef,
   EventsDef,
-  SlotsDef,
+  ScopedSlotsDef,
   Data,
   Methods,
   Computed,
   Mixins,
   Extends,
-  StateDef,
-  Props = ExtractPropsFromDef<PropsDef>,
+  StatesDef,
+  InjectionsDef,
+  Props = ExtractProps<PropsDef>,
   V extends Vue = JSXVue<
     Data,
     Readonly<Props>,
     Readonly<ExtractListeners<EventsDef>>,
-    Readonly<ExtractSlots<SlotsDef>>,
+    Readonly<ExtractScopedSlots<ScopedSlotsDef>>,
     EventsDef,
     ExtractJSXProps<PropsDef>,
-    ExtractJSXChildren<SlotsDef>
+    ExtractJSXChildren<ScopedSlotsDef>
   >
 > extends VueConstructor<V> {
   new (): MixedJSXVueInstance<
     PropsDef,
     EventsDef,
-    SlotsDef,
+    ScopedSlotsDef,
     Data,
     Methods,
     Computed,
     Mixins,
     Extends,
-    StateDef,
+    StatesDef,
+    InjectionsDef,
     Props,
     V
   >
@@ -157,7 +201,7 @@ interface JSXVue<
   Data,
   InstanceProps,
   Listeners extends NormalizedListenerMap,
-  Slots extends NormalizedSlotMap,
+  ScopedSlots extends NormalizedScopedSlotMap,
   EventsDef,
   JSXProps,
   JSXChildren
@@ -165,8 +209,10 @@ interface JSXVue<
   $data: Data
   $props: InstanceProps
   $listeners: Optional<Listeners> & NormalizedListenerMap
-  $scopedSlots: Slots
-  $emit: ExtractEventEmitter<this, EventsDef> & ((...args: any[]) => this)
+  $scopedSlots: ScopedSlots
+  $emit: ExtractEventEmitter<this, EventsDef> &
+    ((type: string, ...args: any[]) => this)
+
   '#props': JSXProps &
     (JSXChildren extends None
       ? {}
@@ -176,54 +222,65 @@ interface JSXVue<
 interface JSXComponentOptions<
   PropsDef,
   EventsDef,
-  SlotsDef,
+  ScopedSlotsDef,
   Data,
   Methods,
   Computed,
   Mixins,
   Extends,
-  StateDef,
-  State = ExtractState<StateDef>,
-  Props = ExtractPropsFromDef<PropsDef>,
+  StatesDef,
+  InjectionsDef,
+  States = ExtractStates<StatesDef>,
+  Props = ExtractProps<PropsDef>,
   MixedProps = Props &
     ExtractInstanceProps<ExtractMixinsInstance<Mixins>> &
-    ExtractInstanceProps<ExtractInstance<Extends>>
+    ExtractInstanceProps<ExtractInstance<Extends>>,
+  Injections = ExtractInjections<InjectionsDef>
 >
   extends ComponentOptions<
     Vue,
-    DataDef<Data, MixedProps & State, Vue>,
+    DataDef<Data, MixedProps & States & Injections, Vue>,
     Methods,
     Computed,
     PropsDef,
     MixedProps
   > {
-  [STATE_TYPES]?: StateDef
-  [SLOT_TYPES]?: SlotsDef
-  [EVENT_TYPES]?: EventsDef
+  [INJECTIONS]?: InjectionsDef
+  [STATES]?: StatesDef
+  [SCOPED_SLOTS]?: ScopedSlotsDef
+  [EVENTS]?: EventsDef
   // due to ComponentOptions['mixins'] is restricted to array, we have to specify mixin inner type.
   mixins?: [Mixins]
   extends?: Extends
 }
 
-type JSXRenderContext<Props, Listeners, Slots> = RenderContext<
-  Props & Record<string, any>
-> & {
+type JSXRenderContext<
+  Props,
+  Listeners,
+  ScopedSlots,
+  Injections
+> = RenderContext<Props & Record<string, any>> & {
   readonly listeners: Optional<Listeners>
-  readonly scopedSlots: Slots
+  readonly scopedSlots: ScopedSlots
+  readonly injections: Injections
 }
 
-type FunctionalRender<Props, Listeners, Slots> = (
+type FunctionalRender<Props, Listeners, ScopedSlots, Injections> = (
   this: undefined,
-  context: JSXRenderContext<Props, Listeners, Slots>,
+  context: JSXRenderContext<Props, Listeners, ScopedSlots, Injections>,
 ) => VNode | VNode[]
 
 type FunctionalComponentDefinition<
   PropsDef,
   EventsDef,
-  SlotsDef,
-  Props = ExtractPropsFromDef<PropsDef>,
+  ScopedSlotsDef,
+  InjectionsDef,
+  Props = ExtractProps<PropsDef>,
   Listeners extends NormalizedListenerMap = ExtractListeners<EventsDef>,
-  Slots extends NormalizedSlotMap = ExtractSlots<SlotsDef>
+  ScopedSlots extends NormalizedScopedSlotMap = ExtractScopedSlots<
+    ScopedSlotsDef
+  >,
+  Injections = ExtractInjections<InjectionsDef>
 > = {
   name?: string
   props?: PropsDef
@@ -232,47 +289,53 @@ type FunctionalComponentDefinition<
     event?: string
   }
   inject?: InjectOptions
-  [SLOT_TYPES]?: SlotsDef
-  [EVENT_TYPES]?: EventsDef
-  render: FunctionalRender<Props, Listeners, Slots>
+  [INJECTIONS]?: InjectionsDef
+  [SCOPED_SLOTS]?: ScopedSlotsDef
+  [EVENTS]?: EventsDef
+  render: FunctionalRender<Props, Listeners, ScopedSlots, Injections>
 }
 
 type ThisTypedComponentDefinitions<
   PropsDef,
   EventsDef,
-  SlotsDef,
+  ScopedSlotsDef,
   Data,
   Methods,
   Computed,
   Mixins,
   Extends,
-  StateDef,
-  Props = ExtractPropsFromDef<PropsDef>,
+  StatesDef,
+  InjectionsDef,
+  Props = ExtractProps<PropsDef>,
   Listeners extends NormalizedListenerMap = ExtractListeners<EventsDef>,
-  Slots extends NormalizedSlotMap = ExtractSlots<SlotsDef>
+  ScopedSlots extends NormalizedScopedSlotMap = ExtractScopedSlots<
+    ScopedSlotsDef
+  >
 > = object &
   JSXComponentOptions<
     PropsDef,
     EventsDef,
-    SlotsDef,
+    ScopedSlotsDef,
     Data,
     Methods,
     Computed,
     Mixins,
     Extends,
-    StateDef
+    StatesDef,
+    InjectionsDef
   > &
   ThisType<
     MixedJSXVueInstance<
       PropsDef,
       EventsDef,
-      SlotsDef,
+      ScopedSlotsDef,
       Data,
       Methods,
       Computed,
       Mixins,
       Extends,
-      StateDef
+      StatesDef,
+      InjectionsDef
     >
   >
 
@@ -294,7 +357,7 @@ type CheckOneStateMapOptional<T> = undefined extends T[keyof T]
 
 type ExtractOneState<T> = { [K in keyof T]: InferredOrSelfType<T[K]> }
 
-type ExtractState<T> = T extends Type<infer R>
+type ExtractStates<T> = T extends Type<infer R>
   ? R
   : UnionToIntersection<
       {
@@ -306,7 +369,7 @@ type ExtractState<T> = T extends Type<infer R>
 
 /// Type
 
-type Type<T> = { '#type': T }
+type Type<T> = { [TYPE_KEY]: T }
 
 declare function type<T>(): Type<T>
 
@@ -315,11 +378,11 @@ declare function type<T>(): Type<T>
 type InferredOrSelfType<T, I = InferredType<T>> = I extends Unknown<T> ? T : I
 
 interface None {
-  __none__: true
+  [NONE_KEY]: true
 }
 
 interface Unknown<T = any> {
-  __unknown__: true
+  [UNKNOWN_KEY]: true
 }
 
 type InferredType<T> = T extends undefined
@@ -334,6 +397,8 @@ type InferredType<T> = T extends undefined
   ? boolean
   : T extends symbol
   ? symbol
+  : T extends void
+  ? void
   : T extends Type<infer R>
   ? R
   : T extends { (): infer R }
@@ -342,21 +407,23 @@ type InferredType<T> = T extends undefined
   ? R
   : Unknown<T>
 
-type ExtractOneProp<T> = {
-  [K in keyof T]: InferredType<T[K]> extends Unknown
-    ? T[K] extends { type: Function; default: infer R } // function type
-      ? R
-      : T[K] extends { default: () => infer R }
-      ? R
-      : T[K] extends { type: infer R }
-      ? InferredOrSelfType<R>
-      : T[K] extends PropOptions<infer R>
-      ? R
-      : T[K]
-    : InferredType<T[K]>
-}
+type ExtractOnePropDef<T, V = InferredType<T>> = V extends Unknown
+  ? T extends { type: FunctionConstructor; default: infer R } // function type
+    ? R
+    : T extends { default: () => infer R }
+    ? R
+    : T extends { type: infer R }
+    ? InferredOrSelfType<R>
+    : T extends PropOptions<infer R>
+    ? {} extends R
+      ? any
+      : R
+    : T
+  : V
 
-type ExtractPropsFromDef<T> = UnionToIntersection<
+type ExtractOneProp<T> = { [K in keyof T]: ExtractOnePropDef<T[K]> }
+
+type ExtractProps<T> = UnionToIntersection<
   {
     [K in keyof T]: OptionalIfNotMatch<
       T[K],
@@ -392,127 +459,72 @@ type ExtractEventEmitter<V, E> = UnionToIntersection<
   }[keyof E]
 >
 
+// Injections
+
+type ExtractOneInjectionDef<T, V = InferredType<T>> = V extends Unknown
+  ? T extends { type: FunctionConstructor; default: infer R } // function type
+    ? R
+    : T extends { default: () => infer R }
+    ? R
+    : T extends { type: infer R }
+    ? InferredOrSelfType<R>
+    : T extends { from?: string | symbol; default?: infer R }
+    ? {} extends R
+      ? any
+      : InferredOrSelfType<R>
+    : T
+  : V
+
+type ExtractOneInjection<T> = { [K in keyof T]: ExtractOneInjectionDef<T[K]> }
+
+type ExtractInjections<T> = UnionToIntersection<
+  {
+    [K in keyof T]: OptionalIfNotMatch<
+      T[K],
+      { default: any },
+      ExtractOneInjection<Pick<T, Extract<K, keyof T>>>
+    >
+  }[keyof T]
+>
+
 /// Slot
 
-type NormalizedSlotMap = Record<string, NormalizedScopedSlot | undefined>
+type NormalizedScopedSlotMap = Record<string, NormalizedScopedSlot | undefined>
 
-type SimpleSlotType = string | boolean | VNode
+type ConstructScopedSlot<P> = void extends P
+  ? () => ScopedSlotChildren
+  : P extends undefined
+  ? (props?: P) => ScopedSlotChildren
+  : (props: P) => ScopedSlotChildren
 
-type SlotType = SimpleSlotType | VNode[] | undefined
+type ExtractScopedSlotScopeType<T, V = InferredType<T>> = V extends Unknown
+  ? T extends { scope: infer R }
+    ? InferredOrSelfType<R>
+    : {} extends T
+    ? any
+    : T
+  : V
 
-type Slot = (props: any) => SlotType
+type ExtractOneScopedSlot<T> = {
+  [K in keyof T]: ConstructScopedSlot<ExtractScopedSlotScopeType<T[K]>>
+}
 
-type ExtractOneSlotMap<T> = { [K in keyof T]: ExtractOneSlot<T[K]> }
-
-type CheckOneSlotMapOptional<T, O> = O extends { required: boolean }
-  ? T
-  : undefined extends T[keyof T]
-  ? Optional<T>
-  : T
-
-type ExtractSlotsFromMap<T> = UnionToIntersection<
+type ExtractScopedSlots<T> = UnionToIntersection<
   {
-    [K in keyof T]: CheckOneSlotMapOptional<
-      ExtractOneSlotMap<Pick<T, Extract<K, keyof T>>>,
-      T[K]
+    [K in keyof T]: OptionalIfNotMatch<
+      T[K],
+      { required: boolean }, // we assume the required exists only if it's true.
+      ExtractOneScopedSlot<Pick<T, Extract<K, keyof T>>>
     >
   }[keyof T]
 > &
-  NormalizedSlotMap
+  NormalizedScopedSlotMap
 
-type ExtractSlotType<T> = T extends { type: infer R }
-  ? InferredOrSelfType<R>
-  : SlotType
-
-type ExtractSlotScopeArg<T> = T extends { scope: infer A }
-  ? InferredOrSelfType<A>
-  : Unknown
-
-type ConstructSlot<A, R> = A extends Unknown ? () => R : (props: A) => R
-
-type ExtractOneSlot<
-  T,
-  I = InferredType<T>,
-  R = ExtractSlotType<T>,
-  A = ExtractSlotScopeArg<T>
-> = I extends Unknown
-  ? T extends ({ type: infer R_ } | { scope: infer A_ })
-    ? T extends { required: boolean }
-      ? ConstructSlot<A, R>
-      : ConstructSlot<A, R> | undefined
-    : Unknown
-  : undefined extends I
-  ? (() => I) | undefined
-  : () => I
-
-type ExtractDefaultSlotFromType<D> = D extends (Function | undefined)
-  ? D
-  : () => D
-
-type ExtractDefaultSlotMap<
-  T,
-  S = ExtractOneSlot<T>,
-  D = T extends Type<infer R> ? R : Unknown
-> = T extends Function
-  ? { default: T }
-  : D extends Unknown
-  ? S extends Unknown
-    ? S
-    : OptionalIfMatch<undefined, S, { default: S }>
-  : OptionalIfMatch<undefined, D, { default: ExtractDefaultSlotFromType<D> }>
-
-type ExtractSlots<T, D = ExtractDefaultSlotMap<T>> = D extends Unknown
-  ? ExtractSlotsFromMap<T>
-  : D & NormalizedSlotMap
-
-type ExtractJSXChildType<T, I = InferredType<T>> = I extends Unknown
-  ? T extends { type: infer R }
-    ? InferredOrSelfType<R>
-    : T
-  : I
-
-type ExtractJSXUnionChildrenFromMap<T> = [
-  {
-    [K in keyof T]: T[K] extends { required: boolean }
-      ? ExtractJSXOneChild<T[K]>
-      : (ExtractJSXOneChild<T[K]> | undefined)
-  }[keyof T]
-]
-
-type ExtractJSXChildrenFromMap<
-  T,
-  K = ExtractJSXUnionChildrenFromMap<T>
-> = K extends [infer I] ? I | I[] | undefined : never
-
-type ExtractJSXOneChild<
-  T,
-  S = ExtractOneSlot<T>,
-  F = S extends (...args: any[]) => infer R ? R : Unknown
-> = undefined extends S ? F | undefined : F
-
-type ExtractJSXSingleChild<
-  T,
-  I = InferredType<T>,
-  R = ExtractSlotType<T>
-> = T extends Function
-  ? T
-  : I extends Unknown
-  ? T extends { type: infer R_ }
-    ? T extends { required: boolean }
-      ? R
-      : R | undefined
-    : T extends ({ scope: infer A_ } | { required: boolean })
-    ? T extends { required: boolean }
-      ? NonNullable<SlotType>
-      : SlotType
-    : Unknown
-  : I
-
-type ExtractJSXChildren<T, C = ExtractJSXSingleChild<T>> = T extends None
+type ExtractJSXChildren<T> = T extends None
   ? None
-  : C extends Unknown
-  ? ExtractJSXChildrenFromMap<T>
-  : C
+  : { default: any } extends T // only one child.
+  ? ExtractScopedSlots<T>['default'] | ScopedSlotChildren
+  : ScopedSlotChildren
 
 /// Utils
 
@@ -528,21 +540,4 @@ type OptionalIfMatch<T, C, R> = T extends C ? Optional<R> : R
 
 type OptionalIfNotMatch<T, C, R> = T extends C ? R : Optional<R>
 
-type ExtractArgs<T> = T extends (...args: infer A) => any ? A : never
-
-type VChildren = SlotType
-
-declare const VChildren: SlotType
-
-declare const VNode: VNode
-
-export {
-  component,
-  functional,
-  type,
-  VChildren,
-  VNode,
-  SLOT_TYPES,
-  EVENT_TYPES,
-  STATE_TYPES,
-}
+export { component, functional, type, INJECTIONS, SCOPED_SLOTS, EVENTS, STATES }
