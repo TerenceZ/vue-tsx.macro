@@ -161,10 +161,9 @@ Make TSX (JSX for Typescript) work for Vue 2.
 - #### All setups are done. We can write **TSX** for `vue` with **ALMOST ALL** `typescript` benefits now.
 
   ```jsx
-  import LogoAsset from '../assets/logo.png'
+  import LogoAsset from '@/assets/logo.png'
   import { component, type as t, EVENTS, SCOPED_SLOTS } from 'vue-tsx.macro'
-  import HelloWorld from '../components/HelloWorld.vue'
-  import { VNode } from 'vue'
+  import HelloWorld from '@/components/HelloWorld.vue'
 
   const Component = component({
     props: {
