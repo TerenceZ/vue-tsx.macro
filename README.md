@@ -4,7 +4,7 @@ Make TSX (JSX for Typescript) work for Vue 2.
 
 ### HOW to use with vue-cli?
 
-**NOTICE**: You can try `vue-cli-plugin-tsx` to simplify the steps!
+**SUGGESTION**: Try [vue-cli-plugin-tsx](https://github.com/TerenceZ/vue-cli-plugin-tsx) to simplify the steps!
 
 - #### Use `vue-cli` to create a project with typescript and jsx support
 
