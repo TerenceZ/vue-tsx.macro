@@ -4,11 +4,14 @@ var _require = require('babel-plugin-macros'),
     createMacro = _require.createMacro,
     MacroError = _require.MacroError;
 
+var path = require('path');
+
 module.exports = createMacro(transformJSXComponent);
 
 function transformJSXComponent(_ref) {
   var references = _ref.references,
-      t = _ref.babel.types;
+      t = _ref.babel.types,
+      state = _ref.state;
   var transformers = {
     component: transformComponent,
     functional: transformFunctional,
@@ -130,7 +133,11 @@ function transformJSXComponent(_ref) {
         defName = getComponentNameByParentVarName(defPath);
 
         if (defName) {
-          defPath.get('properties.0').insertBefore(t.objectProperty(t.identifier('name'), t.stringLiteral(defName)));
+          defPath.node.properties.unshift(t.objectProperty(t.identifier('name'), t.stringLiteral(defName)));
+        } else if (defPath.findParent(function (p) {
+          return p.isExportDefaultDeclaration();
+        }) && state.filename) {
+          defPath.node.properties.unshift(t.objectProperty(t.identifier('name'), t.stringLiteral(path.basename(state.filename, path.extname(state.filename)))));
         }
       }
     }

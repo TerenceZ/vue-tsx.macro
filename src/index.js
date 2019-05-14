@@ -1,10 +1,11 @@
 'use strict'
 
 const { createMacro, MacroError } = require('babel-plugin-macros')
+const path = require('path')
 
 module.exports = createMacro(transformJSXComponent)
 
-function transformJSXComponent({ references, babel: { types: t } }) {
+function transformJSXComponent({ references, babel: { types: t }, state }) {
   const transformers = {
     component: transformComponent,
     functional: transformFunctional,
@@ -153,11 +154,21 @@ function transformJSXComponent({ references, babel: { types: t } }) {
       if (defName == null) {
         defName = getComponentNameByParentVarName(defPath)
         if (defName) {
-          defPath
-            .get('properties.0')
-            .insertBefore(
-              t.objectProperty(t.identifier('name'), t.stringLiteral(defName)),
-            )
+          defPath.node.properties.unshift(
+            t.objectProperty(t.identifier('name'), t.stringLiteral(defName)),
+          )
+        } else if (
+          defPath.findParent(p => p.isExportDefaultDeclaration()) &&
+          state.filename
+        ) {
+          defPath.node.properties.unshift(
+            t.objectProperty(
+              t.identifier('name'),
+              t.stringLiteral(
+                path.basename(state.filename, path.extname(state.filename)),
+              ),
+            ),
+          )
         }
       }
     }
