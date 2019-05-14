@@ -520,11 +520,16 @@ type ExtractScopedSlots<T> = UnionToIntersection<
 > &
   NormalizedScopedSlotMap
 
+type JSXNode = VNode | string | boolean | undefined
+
+interface RecursiveArray<T> extends Array<T | RecursiveArray<T>> {}
+interface ListOrReursiveArray<T> extends Array<T | RecursiveArray<T>> {}
+
 type ExtractJSXChildren<T> = T extends None
   ? None
   : { default: any } extends T // only one child.
-  ? ExtractScopedSlots<T>['default'] | ScopedSlotChildren
-  : ScopedSlotChildren
+  ? ExtractScopedSlots<T>['default'] | JSXNode | ListOrReursiveArray<JSXNode>
+  : JSXNode | ListOrReursiveArray<JSXNode>
 
 /// Utils
 

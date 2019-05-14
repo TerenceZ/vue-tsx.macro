@@ -1,7 +1,7 @@
 // based on @types/react
 
 import * as CSS from 'csstype'
-import Vue, { VNode, VNodeChildren } from 'vue'
+import Vue, { VNode } from 'vue'
 import { NormalizedScopedSlot } from 'vue/types/vnode'
 
 declare module 'vue/types/vue' {
@@ -282,18 +282,13 @@ declare global {
       transitionEndCapture?: TransitionEventHandler
     }
 
-    type DOMJSXPrimaryChildType =
-      | VNode
-      | string
-      | number
-      | boolean
-      | null
-      | undefined
+    type JSXNode = VNode | string | boolean | undefined
 
-    type DOMJSXChildrenType = DOMJSXPrimaryChildType | DOMJSXPrimaryChildType[]
+    interface RecursiveArray<T> extends Array<T | RecursiveArray<T>> {}
+    interface ListOrReursiveArray<T> extends Array<T | RecursiveArray<T>> {}
 
     interface DOMAttributes {
-      '#children'?: DOMJSXChildrenType | DOMJSXChildrenType[]
+      '#children'?: JSXNode | ListOrReursiveArray<JSXNode>
       on?: {
         [K in keyof NativeEventHandlerMap]:
           | NativeEventHandlerMap[K]
