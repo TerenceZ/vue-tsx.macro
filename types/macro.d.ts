@@ -15,6 +15,7 @@ import {
   ScopedSlotChildren,
   ScopedSlotReturnValue,
 } from 'vue/types/vnode'
+import { JSX_PROPS_KEY, JSX_CHILDREN_KEY } from './constant'
 
 declare const STATES: unique symbol
 declare const EVENTS: unique symbol
@@ -214,10 +215,14 @@ interface JSXVue<
   $emit: ExtractEventEmitter<this, EventsDef> &
     ((type: string, ...args: any[]) => this)
 
-  '#props': JSXProps &
+  [JSX_PROPS_KEY]: JSXProps &
     (JSXChildren extends None
       ? {}
-      : OptionalIfMatch<undefined, JSXChildren, { '#children': JSXChildren }>)
+      : OptionalIfMatch<
+          undefined,
+          JSXChildren,
+          { [JSX_CHILDREN_KEY]: JSXChildren }
+        >)
 }
 
 interface JSXComponentOptions<

@@ -3,10 +3,11 @@
 import * as CSS from 'csstype'
 import Vue, { VNode } from 'vue'
 import { ScopedSlotReturnValue } from 'vue/types/vnode'
+import { JSX_PROPS_KEY, JSX_CHILDREN_KEY } from './constant'
 
 declare module 'vue/types/vue' {
   interface Vue {
-    '#props': Record<string, any>
+    [JSX_PROPS_KEY]: Record<string, any>
   }
 }
 
@@ -53,7 +54,7 @@ declare global {
         ? TransformToScopedSlotMap<S>
         : {}
       attrs?: Record<string, string | number | boolean>
-      props?: T extends { '#props': infer P } ? P : {}
+      props?: T extends { [JSX_PROPS_KEY]: infer P } ? P : {}
       domProps?: Record<string, string | number | boolean>
       hook?: Record<string, Function>
     }
@@ -295,7 +296,7 @@ declare global {
     }
 
     interface DOMAttributes {
-      '#children'?: ScopedSlotReturnValue
+      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue
       on?: {
         [K in keyof NativeEventHandlerMap]:
           | NativeEventHandlerMap[K]
@@ -1583,10 +1584,10 @@ declare global {
     interface Element extends VNode {}
     interface ElementClass extends Vue {}
     interface ElementAttributesProperty {
-      '#props': {}
+      [JSX_PROPS_KEY]: {}
     }
     interface ElementChildrenAttribute {
-      '#children': {}
+      [JSX_CHILDREN_KEY]: {}
     }
 
     // tslint:disable-next-line:no-empty-interface
