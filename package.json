@@ -1,6 +1,6 @@
 {
   "name": "vue-tsx.macro",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "make tsx work for vue2",
   "main": "dist/index.js",
   "typings": "types/macro.d.ts",
