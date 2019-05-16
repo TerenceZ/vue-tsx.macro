@@ -1815,44 +1815,44 @@ declare global {
       svg: VueJSX.SVGProps<SVGSVGElement>
 
       animate: VueJSX.SVGProps<SVGElement> // TODO: It is SVGAnimateElement but is not in TypeScript's lib.dom.d.ts for now.
-      animateMotion: VueJSX.SVGProps<SVGElement>
-      animateTransform: VueJSX.SVGProps<SVGElement> // TODO: It is SVGAnimateTransformElement but is not in TypeScript's lib.dom.d.ts for now.
+      'animate-motion': VueJSX.SVGProps<SVGElement>
+      'animate-transform': VueJSX.SVGProps<SVGElement> // TODO: It is SVGAnimateTransformElement but is not in TypeScript's lib.dom.d.ts for now.
       circle: VueJSX.SVGProps<SVGCircleElement>
-      clipPath: VueJSX.SVGProps<SVGClipPathElement>
+      'clip-path': VueJSX.SVGProps<SVGClipPathElement>
       defs: VueJSX.SVGProps<SVGDefsElement>
       desc: VueJSX.SVGProps<SVGDescElement>
       ellipse: VueJSX.SVGProps<SVGEllipseElement>
-      feBlend: VueJSX.SVGProps<SVGFEBlendElement>
-      feColorMatrix: VueJSX.SVGProps<SVGFEColorMatrixElement>
-      feComponentTransfer: VueJSX.SVGProps<SVGFEComponentTransferElement>
-      feComposite: VueJSX.SVGProps<SVGFECompositeElement>
-      feConvolveMatrix: VueJSX.SVGProps<SVGFEConvolveMatrixElement>
-      feDiffuseLighting: VueJSX.SVGProps<SVGFEDiffuseLightingElement>
-      feDisplacementMap: VueJSX.SVGProps<SVGFEDisplacementMapElement>
-      feDistantLight: VueJSX.SVGProps<SVGFEDistantLightElement>
-      feDropShadow: VueJSX.SVGProps<SVGFEDropShadowElement>
-      feFlood: VueJSX.SVGProps<SVGFEFloodElement>
-      feFuncA: VueJSX.SVGProps<SVGFEFuncAElement>
-      feFuncB: VueJSX.SVGProps<SVGFEFuncBElement>
-      feFuncG: VueJSX.SVGProps<SVGFEFuncGElement>
-      feFuncR: VueJSX.SVGProps<SVGFEFuncRElement>
-      feGaussianBlur: VueJSX.SVGProps<SVGFEGaussianBlurElement>
-      feImage: VueJSX.SVGProps<SVGFEImageElement>
-      feMerge: VueJSX.SVGProps<SVGFEMergeElement>
-      feMergeNode: VueJSX.SVGProps<SVGFEMergeNodeElement>
-      feMorphology: VueJSX.SVGProps<SVGFEMorphologyElement>
-      feOffset: VueJSX.SVGProps<SVGFEOffsetElement>
-      fePointLight: VueJSX.SVGProps<SVGFEPointLightElement>
-      feSpecularLighting: VueJSX.SVGProps<SVGFESpecularLightingElement>
-      feSpotLight: VueJSX.SVGProps<SVGFESpotLightElement>
-      feTile: VueJSX.SVGProps<SVGFETileElement>
-      feTurbulence: VueJSX.SVGProps<SVGFETurbulenceElement>
+      'fe-blend': VueJSX.SVGProps<SVGFEBlendElement>
+      'fe-color-matrix': VueJSX.SVGProps<SVGFEColorMatrixElement>
+      'fe-component-transfer': VueJSX.SVGProps<SVGFEComponentTransferElement>
+      'fe-composite': VueJSX.SVGProps<SVGFECompositeElement>
+      'fe-convolve-matrix': VueJSX.SVGProps<SVGFEConvolveMatrixElement>
+      'fe-diffuse-lighting': VueJSX.SVGProps<SVGFEDiffuseLightingElement>
+      'fe-displacement-map': VueJSX.SVGProps<SVGFEDisplacementMapElement>
+      'fe-distant-light': VueJSX.SVGProps<SVGFEDistantLightElement>
+      'fe-drop-shadow': VueJSX.SVGProps<SVGFEDropShadowElement>
+      'fe-flood': VueJSX.SVGProps<SVGFEFloodElement>
+      'fe-func-a': VueJSX.SVGProps<SVGFEFuncAElement>
+      'fe-func-b': VueJSX.SVGProps<SVGFEFuncBElement>
+      'fe-func-g': VueJSX.SVGProps<SVGFEFuncGElement>
+      'fe-func-r': VueJSX.SVGProps<SVGFEFuncRElement>
+      'fe-gaussian-blur': VueJSX.SVGProps<SVGFEGaussianBlurElement>
+      'fe-image': VueJSX.SVGProps<SVGFEImageElement>
+      'fe-merge': VueJSX.SVGProps<SVGFEMergeElement>
+      'fe-merge-node': VueJSX.SVGProps<SVGFEMergeNodeElement>
+      'fe-morphology': VueJSX.SVGProps<SVGFEMorphologyElement>
+      'fe-offset': VueJSX.SVGProps<SVGFEOffsetElement>
+      'fe-point-light': VueJSX.SVGProps<SVGFEPointLightElement>
+      'fe-specular-lighting': VueJSX.SVGProps<SVGFESpecularLightingElement>
+      'fe-spot-light': VueJSX.SVGProps<SVGFESpotLightElement>
+      'fe-tile': VueJSX.SVGProps<SVGFETileElement>
+      'fe-turbulence': VueJSX.SVGProps<SVGFETurbulenceElement>
       filter: VueJSX.SVGProps<SVGFilterElement>
-      foreignObject: VueJSX.SVGProps<SVGForeignObjectElement>
+      'foreign-object': VueJSX.SVGProps<SVGForeignObjectElement>
       g: VueJSX.SVGProps<SVGGElement>
       image: VueJSX.SVGProps<SVGImageElement>
       line: VueJSX.SVGProps<SVGLineElement>
-      linearGradient: VueJSX.SVGProps<SVGLinearGradientElement>
+      'linear-gradient': VueJSX.SVGProps<SVGLinearGradientElement>
       marker: VueJSX.SVGProps<SVGMarkerElement>
       mask: VueJSX.SVGProps<SVGMaskElement>
       metadata: VueJSX.SVGProps<SVGMetadataElement>
@@ -1861,13 +1861,13 @@ declare global {
       pattern: VueJSX.SVGProps<SVGPatternElement>
       polygon: VueJSX.SVGProps<SVGPolygonElement>
       polyline: VueJSX.SVGProps<SVGPolylineElement>
-      radialGradient: VueJSX.SVGProps<SVGRadialGradientElement>
+      'radial-gradient': VueJSX.SVGProps<SVGRadialGradientElement>
       rect: VueJSX.SVGProps<SVGRectElement>
       stop: VueJSX.SVGProps<SVGStopElement>
       switch: VueJSX.SVGProps<SVGSwitchElement>
       symbol: VueJSX.SVGProps<SVGSymbolElement>
       text: VueJSX.SVGProps<SVGTextElement>
-      textPath: VueJSX.SVGProps<SVGTextPathElement>
+      'text-path': VueJSX.SVGProps<SVGTextPathElement>
       tspan: VueJSX.SVGProps<SVGTSpanElement>
       use: VueJSX.SVGProps<SVGUseElement>
       view: VueJSX.SVGProps<SVGViewElement>
