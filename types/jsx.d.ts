@@ -59,6 +59,96 @@ declare global {
       hook?: Record<string, Function>
     }
 
+    interface BuiltinAttributes extends Attributes {
+      class?: ClassNames
+      staticClass?: string
+      style?: CSSProperties
+      attrs?: Record<string, string | number | boolean>
+      domProps?: Record<string, string | number | boolean>
+      hook?: Record<string, Function>
+    }
+
+    //
+    // Builtin Attributes
+    // ----------------------------------------------------------------------
+
+    interface KeepAliveProps {
+      include?: string | RegExp | string[]
+      exclude?: string | RegExp | string[]
+      max?: string | number
+    }
+
+    interface KeepAliveAttributes extends BuiltinAttributes, KeepAliveProps {
+      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue | (() => ScopedSlotReturnValue)
+      on?: {}
+      props?: KeepAliveAttributes
+      scopedSlots?: { default?: (() => ScopedSlotReturnValue) | undefined }
+    }
+
+    interface TransitionPropsBase {
+      name?: string
+      appear?: boolean
+      css?: boolean
+      type?: 'transition' | 'animation'
+      duration?: number | string | { enter?: number; leave?: number }
+      enterClass?: string
+      leaveClass?: string
+      enterToClass?: string
+      leaveToClass?: string
+      enterActiveClass?: string
+      leaveActiveClass?: string
+      appearClass?: string
+      appearActiveClass?: string
+      appearToClass?: string
+
+      onBeforeEnter?: (el: HTMLElement) => void
+      onEnter?: (el: HTMLElement, done: () => void) => void
+      onAfterEnter?: (el: HTMLElement) => void
+      onEnterCancelled?: (el: HTMLElement) => void
+
+      onBeforeLeave?: (el: HTMLElement) => void
+      onLeave?: (el: HTMLElement, done: () => void) => void
+      onAfterLeave?: (el: HTMLElement) => void
+      onLeaveCancelled?: (el: HTMLElement) => void
+    }
+
+    interface TransitionHookEvents {
+      beforeEnter?: (el: HTMLElement) => void
+      enter?: (el: HTMLElement, done: () => void) => void
+      afterEnter?: (el: HTMLElement) => void
+      enterCancelled?: (el: HTMLElement) => void
+
+      beforeLeave?: (el: HTMLElement) => void
+      leave?: (el: HTMLElement, done: () => void) => void
+      afterLeave?: (el: HTMLElement) => void
+      leaveCancelled?: (el: HTMLElement) => void
+    }
+
+    interface TransitionProps extends TransitionPropsBase {
+      mode?: 'in-out' | 'out-in'
+    }
+
+    interface TransitionGroupProps extends TransitionPropsBase {
+      tag?: string
+      moveClass?: string
+    }
+
+    interface TransitionAttributes extends BuiltinAttributes, TransitionProps {
+      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue | (() => ScopedSlotReturnValue)
+      on?: TransitionHookEvents
+      props?: TransitionProps
+      scopedSlots?: { default?: (() => ScopedSlotReturnValue) | undefined }
+    }
+
+    interface TransitionGroupAttributes
+      extends BuiltinAttributes,
+        TransitionGroupProps {
+      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue
+      on?: TransitionHookEvents
+      props?: TransitionGroupProps
+      scopedSlots?: Record<string, (() => ScopedSlotReturnValue) | undefined>
+    }
+
     //
     // Event Handler Types
     // ----------------------------------------------------------------------
@@ -1871,6 +1961,11 @@ declare global {
       tspan: VueJSX.SVGProps<SVGTSpanElement>
       use: VueJSX.SVGProps<SVGUseElement>
       view: VueJSX.SVGProps<SVGViewElement>
+
+      // Builtin
+      'keep-alive': VueJSX.KeepAliveAttributes
+      transition: VueJSX.TransitionAttributes
+      'transition-group': VueJSX.TransitionGroupAttributes
     }
   }
 }
