@@ -79,10 +79,10 @@ declare global {
     }
 
     interface KeepAliveAttributes extends BuiltinAttributes, KeepAliveProps {
-      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue | (() => ScopedSlotReturnValue)
+      [JSX_CHILDREN_KEY]?: VNode | (() => VNode | null | undefined) | undefined
       on?: {}
       props?: KeepAliveAttributes
-      scopedSlots?: { default?: (() => ScopedSlotReturnValue) | undefined }
+      scopedSlots?: { default?: (() => VNode | null | undefined) | undefined }
     }
 
     interface TransitionPropsBase {
@@ -134,10 +134,10 @@ declare global {
     }
 
     interface TransitionAttributes extends BuiltinAttributes, TransitionProps {
-      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue | (() => ScopedSlotReturnValue)
+      [JSX_CHILDREN_KEY]?: VNode | (() => VNode | null | undefined) | undefined
       on?: TransitionHookEvents
       props?: TransitionProps
-      scopedSlots?: { default?: (() => ScopedSlotReturnValue) | undefined }
+      scopedSlots?: { default?: (() => VNode | null | undefined) | undefined }
     }
 
     interface TransitionGroupAttributes
