@@ -18,7 +18,7 @@ function transformJSXComponent(_ref) {
     type: transformType,
     EVENTS: removeTypes('EVENTS'),
     STATES: removeTypes('STATES'),
-    SCOPED_SLOTS: removeTypes('SCOPED_SLOTS'),
+    SLOTS: removeTypes('SLOTS'),
     INJECTIONS: transformInjections
   };
   var typeAlias = references['type'] && references['type'].length && references['type'][0].node.name;

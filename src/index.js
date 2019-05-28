@@ -12,7 +12,7 @@ function transformJSXComponent({ references, babel: { types: t }, state }) {
     type: transformType,
     EVENTS: removeTypes('EVENTS'),
     STATES: removeTypes('STATES'),
-    SCOPED_SLOTS: removeTypes('SCOPED_SLOTS'),
+    SLOTS: removeTypes('SLOTS'),
     INJECTIONS: transformInjections,
   }
 

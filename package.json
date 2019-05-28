@@ -1,9 +1,9 @@
 {
   "name": "vue-tsx.macro",
-  "version": "0.1.12",
+  "version": "0.2.0",
   "description": "make tsx work for vue2",
   "main": "dist/index.js",
-  "typings": "types/macro.d.ts",
+  "typings": "types/index.d.ts",
   "scripts": {
     "build": "babel src/index.js -o dist/index.js"
   },
