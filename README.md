@@ -162,7 +162,7 @@ Make TSX (JSX for Typescript) work for Vue 2.
 
   ```jsx
   import LogoAsset from '@/assets/logo.png'
-  import { component, type as t, EVENTS, SCOPED_SLOTS } from 'vue-tsx.macro'
+  import { component, type as t, EVENTS, SLOTS } from 'vue-tsx.macro'
   import HelloWorld from '@/components/HelloWorld.vue'
 
   const Component = component({
@@ -192,7 +192,7 @@ Make TSX (JSX for Typescript) work for Vue 2.
 
     // Declare component's scoped slots' scope (param) types.
     // Single required child of function.
-    [SCOPED_SLOTS]: {
+    [SLOTS]: {
       default: {
         scope: Number,
         required: true,

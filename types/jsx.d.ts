@@ -2,12 +2,12 @@
 
 import * as CSS from 'csstype'
 import Vue, { VNode } from 'vue'
-import { ScopedSlotReturnValue } from 'vue/types/vnode'
-import { JSX_PROPS_KEY, JSX_CHILDREN_KEY } from './constant'
+import { JSX_PROPS, JSX_CHILDREN } from './constants'
+import { JSXChildren } from './misc'
 
 declare module 'vue/types/vue' {
   interface Vue {
-    [JSX_PROPS_KEY]: Record<string, any>
+    [JSX_PROPS]: Record<string, any>
   }
 }
 
@@ -33,14 +33,12 @@ declare global {
       }
     }
 
-    type ReplaceWithScopedSlotReturnValue<T> = T extends (
-      ...args: infer A
-    ) => any
-      ? (...args: A) => ScopedSlotReturnValue
+    type ReplaceWithJSXChildren<T> = T extends (...args: infer A) => any
+      ? (...args: A) => JSXChildren
       : T
 
-    type TransformToScopedSlotMap<T> = {
-      [K in keyof T]: ReplaceWithScopedSlotReturnValue<T[K]>
+    type TransformToSlotMap<T> = {
+      [K in keyof T]: ReplaceWithJSXChildren<T[K]>
     }
 
     interface ClassAttributes<T> extends Attributes {
@@ -49,12 +47,8 @@ declare global {
       style?: CSSProperties
 
       // data
-      on?: T extends { $listeners: infer L } ? L : {}
-      scopedSlots?: T extends { $scopedSlots: infer S }
-        ? TransformToScopedSlotMap<S>
-        : {}
       attrs?: Record<string, string | number | boolean>
-      props?: T extends { [JSX_PROPS_KEY]: infer P } ? P : {}
+      props?: T extends { [JSX_PROPS]: infer P } ? P : {}
       domProps?: Record<string, string | number | boolean>
       hook?: Record<string, Function>
     }
@@ -79,7 +73,7 @@ declare global {
     }
 
     interface KeepAliveAttributes extends BuiltinAttributes, KeepAliveProps {
-      [JSX_CHILDREN_KEY]?: VNode | (() => VNode | null | undefined) | undefined
+      [JSX_CHILDREN]?: VNode | (() => VNode | null | undefined) | undefined
       on?: {}
       props?: KeepAliveAttributes
       scopedSlots?: { default?: (() => VNode | null | undefined) | undefined }
@@ -134,7 +128,7 @@ declare global {
     }
 
     interface TransitionAttributes extends BuiltinAttributes, TransitionProps {
-      [JSX_CHILDREN_KEY]?: VNode | (() => VNode | null | undefined) | undefined
+      [JSX_CHILDREN]?: VNode | (() => VNode | null | undefined) | undefined
       on?: TransitionHookEvents
       props?: TransitionProps
       scopedSlots?: { default?: (() => VNode | null | undefined) | undefined }
@@ -143,10 +137,10 @@ declare global {
     interface TransitionGroupAttributes
       extends BuiltinAttributes,
         TransitionGroupProps {
-      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue
+      [JSX_CHILDREN]?: JSXChildren
       on?: TransitionHookEvents
       props?: TransitionGroupProps
-      scopedSlots?: Record<string, (() => ScopedSlotReturnValue) | undefined>
+      scopedSlots?: Record<string, (() => JSXChildren) | undefined>
     }
 
     //
@@ -386,7 +380,7 @@ declare global {
     }
 
     interface DOMAttributes {
-      [JSX_CHILDREN_KEY]?: ScopedSlotReturnValue
+      [JSX_CHILDREN]?: JSXChildren
       on?: {
         [K in keyof NativeEventHandlerMap]:
           | NativeEventHandlerMap[K]
@@ -1674,10 +1668,10 @@ declare global {
     interface Element extends VNode {}
     interface ElementClass extends Vue {}
     interface ElementAttributesProperty {
-      [JSX_PROPS_KEY]: {}
+      [JSX_PROPS]: {}
     }
     interface ElementChildrenAttribute {
-      [JSX_CHILDREN_KEY]: {}
+      [JSX_CHILDREN]: {}
     }
 
     // tslint:disable-next-line:no-empty-interface
