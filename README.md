@@ -186,8 +186,8 @@ Make TSX (JSX for Typescript) work for Vue 2.
     // Declare component's events with their payload types.
     // This field will be removed by macro.
     [EVENTS]: {
-      eventWithStringPayload: String,
-      eventWithTSPayload: t<{ count: number }>(),
+      onEventWithStringPayload: String,
+      onEventWithTSPayload: t<{ count: number }>(),
     },
 
     // Declare component's scoped slots' scope (param) types.
@@ -224,7 +224,7 @@ Make TSX (JSX for Typescript) work for Vue 2.
             },
           }}>
           <img alt='123' src={LogoAsset} />
-          <Component propWithRequiredTSType={[1, 2]} propWithVuePropDef={123}>
+          <Component propWithRequiredTSType={[1, 2]} propWithVuePropDef={123} onEventWithStringPayload={data => console.log(data)}>
             {() => [<hr />]}
           </Component>
         </div>

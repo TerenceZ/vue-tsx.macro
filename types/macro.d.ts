@@ -102,8 +102,8 @@ export function functional<
 
 export type JSXComponentInstance<V extends Vue, Props, Events, SlotArgs> = V & {
   [JSX_PROPS]: Props &
-    JSXComponentChildren<SlotArgs> & {
-      on?: EventHandlers<Events>
+    JSXComponentChildren<SlotArgs> &
+    EventHandlers<Events> & {
       scopedSlots?: JSXScopedSlotsOptions<SlotArgs>
     }
 }

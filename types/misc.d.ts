@@ -30,6 +30,6 @@ export type UnionToIntersection<U> = (U extends any
 
 export type EventHandlers<Events> = {
   [K in keyof Events]?: Events[K] extends Function
-    ? Events[K] | Events[K][]
-    : ((event: Events[K]) => void) | ((event: Events[K]) => void)[]
+    ? Events[K]
+    : (event: Events[K]) => void
 }

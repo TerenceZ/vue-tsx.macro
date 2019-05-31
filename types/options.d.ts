@@ -32,9 +32,8 @@ export type ComponentOptionsThisType<
   V extends Vue,
   Attributes,
   Props,
-  Events,
-  Instance = Attributes & Readonly<Props> & V
-> = { $emit: EventEmitter<Instance, Events> } & Instance
+  Events
+> = Attributes & Readonly<Props> & V
 
 export type ThisTypedInnerComponentOptions<
   V extends Vue,
@@ -220,8 +219,3 @@ export type OneScopedSlotForInstance<Arg, Return> = unknown extends Arg // TS >=
   : {} extends Arg // TS < 3.5.0
   ? () => Return
   : (scope: Arg) => Return
-
-// Event emitter
-export type EventEmitter<This, Events> = UnionToIntersection<
-  { [K in keyof Events]: (type: K, payload: Events[K]) => This }[keyof Events]
->
