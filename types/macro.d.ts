@@ -12,7 +12,9 @@ import {
   STATE,
   JSX_PROPS,
   JSX_CHILDREN,
-  JSX_COMPONENT,
+  JSX_MIXINS,
+  JSX_EVENTS,
+  JSX_SLOT_ARGS,
 } from './constants'
 import {
   OneScopedSlotForInstance,
@@ -44,11 +46,13 @@ export declare function component<
     keyof Props,
   SlotArgsRequiredNames extends keyof SlotArgs = RequiredNames<SlotArgs> &
     keyof SlotArgs,
-  Extra = JSXComponentMixin<Extends> &
-    UnionToIntersection<JSXComponentMixin<Mixins>>
+  MixinThisType = JSXComponentMixin<Extends> &
+    UnionToIntersection<JSXComponentMixin<Mixins>>,
+  MixinInstance = InstanceType<Extends> &
+    UnionToIntersection<InstanceType<Mixins>>
 >(
   options: ThisTypedComponentOptions<
-    Vue & Extra,
+    Vue & MixinThisType,
     Data,
     Methods,
     Computed,
@@ -66,11 +70,13 @@ export declare function component<
     [SLOTS]?: SlotArgsDef
   },
 ): JSXComponent<
-  Vue & InstanceType<Extends> & UnionToIntersection<InstanceType<Mixins>>,
-  PropsForInstance<Props, PropsRequiredNames>,
-  Events,
-  SlotArgsForInstance<SlotArgs, SlotArgsRequiredNames>,
-  Data & Methods & Computed & State & Injections & Extra
+  Vue & MixinInstance,
+  PropsForInstance<Props, PropsRequiredNames> &
+    UnionToIntersection<JSXComponentProps<Extends | Mixins>>,
+  Events & UnionToIntersection<JSXComponentEvents<Extends | Mixins>>,
+  SlotArgsForInstance<SlotArgs, SlotArgsRequiredNames> &
+    UnionToIntersection<JSXComponentSlotArgs<Extends | Mixins>>,
+  Data & Methods & Computed & State & Injections & MixinThisType
 >
 
 export function functional<Props = Record<string, any>>(
@@ -115,7 +121,10 @@ export type JSXComponent<
   SlotArgs,
   MixinAttributes = {}
 > = VueConstructor<JSXComponentInstance<V, Props, Events, SlotArgs>> & {
-  [JSX_COMPONENT]: MixinAttributes
+  [JSX_PROPS]: Props
+  [JSX_EVENTS]: Events
+  [JSX_SLOT_ARGS]: SlotArgs
+  [JSX_MIXINS]: MixinAttributes
 }
 
 export type JSXComponentChildren<Args> = unknown extends Args // TS >= 3.5
@@ -153,3 +162,30 @@ export type JSXComponentMixin<
       Events
     >
   : InstanceType<Component>
+
+export type JSXComponentProps<C> = C extends JSXComponent<
+  any,
+  infer P,
+  any,
+  any
+>
+  ? P
+  : {}
+
+export type JSXComponentEvents<C> = C extends JSXComponent<
+  any,
+  any,
+  infer E,
+  any
+>
+  ? E
+  : {}
+
+export type JSXComponentSlotArgs<C> = C extends JSXComponent<
+  any,
+  any,
+  any,
+  infer S
+>
+  ? S
+  : {}

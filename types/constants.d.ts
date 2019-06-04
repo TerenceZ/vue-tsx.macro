@@ -2,7 +2,11 @@ export declare const JSX_PROPS: unique symbol
 
 export declare const JSX_CHILDREN: unique symbol
 
-export declare const JSX_COMPONENT: unique symbol
+export declare const JSX_MIXINS: unique symbol
+
+export declare const JSX_EVENTS: unique symbol
+
+export declare const JSX_SLOT_ARGS: unique symbol
 
 export declare const TYPE: unique symbol
 
