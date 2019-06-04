@@ -123,7 +123,14 @@ export type JSXComponentChildren<Args> = unknown extends Args // TS >= 3.5
   : {} extends Args // TS < 3.5
   ? {}
   : {
-      [JSX_CHILDREN]: (message: string) => JSXChildren
+      [JSX_CHILDREN]?: { default: any } extends Args
+        ?
+            | OneScopedSlotForInstance<
+                Args extends { default: infer A } ? A : never,
+                JSXChildren
+              >
+            | JSXChildren
+        : JSXChildren
     }
 
 export type JSXScopedSlotsOptions<Args> = {
