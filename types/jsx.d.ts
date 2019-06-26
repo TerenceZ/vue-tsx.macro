@@ -173,385 +173,227 @@ declare global {
     interface DOMEventListeners {
       // Clipboard Events
       onCopy?: ClipboardEventHandler
-      onCopyCapture?: ClipboardEventHandler
       onCut?: ClipboardEventHandler
-      onCutCapture?: ClipboardEventHandler
       onPaste?: ClipboardEventHandler
-      onPasteCapture?: ClipboardEventHandler
 
       // Composition Events
-      onCompositionEnd?: CompositionEventHandler
-      onCompositionEndCapture?: CompositionEventHandler
-      onCompositionStart?: CompositionEventHandler
-      onCompositionStartCapture?: CompositionEventHandler
-      onCompositionUpdate?: CompositionEventHandler
-      onCompositionUpdateCapture?: CompositionEventHandler
+      onCompositionend?: CompositionEventHandler
+      onCompositionstart?: CompositionEventHandler
+      onCompositionupdate?: CompositionEventHandler
 
       // Focus Events
       onFocus?: FocusEventHandler
-      onFocusCapture?: FocusEventHandler
       onBlur?: FocusEventHandler
-      onBlurCapture?: FocusEventHandler
 
       // Form Events
       onChange?: FormEventHandler
-      onChangeCapture?: FormEventHandler
-      onBeforeInput?: FormEventHandler
-      onBeforeInputCapture?: FormEventHandler
+      onBeforeinput?: FormEventHandler
       onInput?: FormEventHandler
-      onInputCapture?: FormEventHandler
       onReset?: FormEventHandler
-      onResetCapture?: FormEventHandler
       onSubmit?: FormEventHandler
-      onSubmitCapture?: FormEventHandler
       onInvalid?: FormEventHandler
-      onInvalidCapture?: FormEventHandler
 
       // Image Events
       onLoad?: NativeEventHandler
-      onLoadCapture?: NativeEventHandler
       onError?: NativeEventHandler // also a Media Event
-      onErrorCapture?: NativeEventHandler // also a Media Event
 
       // Keyboard Events
-      onKeyDown?: KeyboardEventHandler
-      onKeyDownCapture?: KeyboardEventHandler
-      onKeyPress?: KeyboardEventHandler
-      onKeyPressCapture?: KeyboardEventHandler
-      onKeyUp?: KeyboardEventHandler
-      onKeyUpCapture?: KeyboardEventHandler
+      onKeydown?: KeyboardEventHandler
+      onKeypress?: KeyboardEventHandler
+      onKeyup?: KeyboardEventHandler
 
       // Media Events
       onAbort?: NativeEventHandler
-      onAbortCapture?: NativeEventHandler
-      onCanPlay?: NativeEventHandler
-      onCanPlayCapture?: NativeEventHandler
-      onCanPlayThrough?: NativeEventHandler
-      onCanPlayThroughCapture?: NativeEventHandler
-      onDurationChange?: NativeEventHandler
-      onDurationChangeCapture?: NativeEventHandler
+      onCanplay?: NativeEventHandler
+      onCanplaythrough?: NativeEventHandler
+      onDurationchange?: NativeEventHandler
       onEmptied?: NativeEventHandler
-      onEmptiedCapture?: NativeEventHandler
       onEncrypted?: NativeEventHandler
-      onEncryptedCapture?: NativeEventHandler
       onEnded?: NativeEventHandler
-      onEndedCapture?: NativeEventHandler
-      onLoadedData?: NativeEventHandler
-      onLoadedDataCapture?: NativeEventHandler
-      onLoadedMetadata?: NativeEventHandler
-      onLoadedMetadataCapture?: NativeEventHandler
-      onLoadStart?: NativeEventHandler
-      onLoadStartCapture?: NativeEventHandler
+      onLoadeddata?: NativeEventHandler
+      onLoadedmetadata?: NativeEventHandler
+      onLoadstart?: NativeEventHandler
       onPause?: NativeEventHandler
-      onPauseCapture?: NativeEventHandler
       onPlay?: NativeEventHandler
-      onPlayCapture?: NativeEventHandler
       onPlaying?: NativeEventHandler
-      onPlayingCapture?: NativeEventHandler
       onProgress?: NativeEventHandler
-      onProgressCapture?: NativeEventHandler
-      onRateChange?: NativeEventHandler
-      onRateChangeCapture?: NativeEventHandler
+      onRatechange?: NativeEventHandler
       onSeeked?: NativeEventHandler
-      onSeekedCapture?: NativeEventHandler
       onSeeking?: NativeEventHandler
-      onSeekingCapture?: NativeEventHandler
       onStalled?: NativeEventHandler
-      onStalledCapture?: NativeEventHandler
       onSuspend?: NativeEventHandler
-      onSuspendCapture?: NativeEventHandler
-      onTimeUpdate?: NativeEventHandler
-      onTimeUpdateCapture?: NativeEventHandler
-      onVolumeChange?: NativeEventHandler
-      onVolumeChangeCapture?: NativeEventHandler
+      onTimeupdate?: NativeEventHandler
+      onVolumechange?: NativeEventHandler
       onWaiting?: NativeEventHandler
-      onWaitingCapture?: NativeEventHandler
 
       // MouseEvents
-      onAuxClick?: MouseEventHandler
-      onAuxClickCapture?: MouseEventHandler
+      onAuxclick?: MouseEventHandler
       onClick?: MouseEventHandler
-      onClickCapture?: MouseEventHandler
-      onContextMenu?: MouseEventHandler
-      onContextMenuCapture?: MouseEventHandler
-      onDoubleClick?: MouseEventHandler
-      onDoubleClickCapture?: MouseEventHandler
+      onContextmenu?: MouseEventHandler
+      onDoubleclick?: MouseEventHandler
       onDrag?: DragEventHandler
-      onDragCapture?: DragEventHandler
-      onDragEnd?: DragEventHandler
-      onDragEndCapture?: DragEventHandler
-      onDragEnter?: DragEventHandler
-      onDragEnterCapture?: DragEventHandler
-      onDragExit?: DragEventHandler
-      onDragExitCapture?: DragEventHandler
-      onDragLeave?: DragEventHandler
-      onDragLeaveCapture?: DragEventHandler
-      onDragOver?: DragEventHandler
-      onDragOverCapture?: DragEventHandler
-      onDragStart?: DragEventHandler
-      onDragStartCapture?: DragEventHandler
+      onDragend?: DragEventHandler
+      onDragenter?: DragEventHandler
+      onDragexit?: DragEventHandler
+      onDragleave?: DragEventHandler
+      onDragover?: DragEventHandler
+      onDragstart?: DragEventHandler
       onDrop?: DragEventHandler
-      onDropCapture?: DragEventHandler
-      onMouseDown?: MouseEventHandler
-      onMouseDownCapture?: MouseEventHandler
-      onMouseEnter?: MouseEventHandler
-      onMouseLeave?: MouseEventHandler
-      onMouseMove?: MouseEventHandler
-      onMouseMoveCapture?: MouseEventHandler
-      onMouseOut?: MouseEventHandler
-      onMouseOutCapture?: MouseEventHandler
-      onMouseOver?: MouseEventHandler
-      onMouseOverCapture?: MouseEventHandler
-      onMouseUp?: MouseEventHandler
-      onMouseUpCapture?: MouseEventHandler
+      onMousedown?: MouseEventHandler
+      onMouseenter?: MouseEventHandler
+      onMouseleave?: MouseEventHandler
+      onMousemove?: MouseEventHandler
+      onMouseout?: MouseEventHandler
+      onMouseover?: MouseEventHandler
+      onMouseup?: MouseEventHandler
 
       // Selection Events
       onSelect?: NativeEventHandler
-      onSelectCapture?: NativeEventHandler
 
       // Touch Events
-      onTouchCancel?: TouchEventHandler
-      onTouchCancelCapture?: TouchEventHandler
-      onTouchEnd?: TouchEventHandler
-      onTouchEndCapture?: TouchEventHandler
-      onTouchMove?: TouchEventHandler
-      onTouchMoveCapture?: TouchEventHandler
-      onTouchStart?: TouchEventHandler
-      onTouchStartCapture?: TouchEventHandler
+      onTouchcancel?: TouchEventHandler
+      onTouchend?: TouchEventHandler
+      onTouchmove?: TouchEventHandler
+      onTouchstart?: TouchEventHandler
 
       // Pointer Events
-      onPointerDown?: PointerEventHandler
-      onPointerDownCapture?: PointerEventHandler
-      onPointerMove?: PointerEventHandler
-      onPointerMoveCapture?: PointerEventHandler
-      onPointerUp?: PointerEventHandler
-      onPointerUpCapture?: PointerEventHandler
-      onPointerCancel?: PointerEventHandler
-      onPointerCancelCapture?: PointerEventHandler
-      onPointerEnter?: PointerEventHandler
-      onPointerEnterCapture?: PointerEventHandler
-      onPointerLeave?: PointerEventHandler
-      onPointerLeaveCapture?: PointerEventHandler
-      onPointerOver?: PointerEventHandler
-      onPointerOverCapture?: PointerEventHandler
-      onPointerOut?: PointerEventHandler
-      onPointerOutCapture?: PointerEventHandler
-      onGotPointerCapture?: PointerEventHandler
-      onGotPointerCaptureCapture?: PointerEventHandler
-      onLostPointerCapture?: PointerEventHandler
-      onLostPointerCaptureCapture?: PointerEventHandler
+      onPointerdown?: PointerEventHandler
+      onPointermove?: PointerEventHandler
+      onPointerup?: PointerEventHandler
+      onPointercancel?: PointerEventHandler
+      onPointerenter?: PointerEventHandler
+      onPointerleave?: PointerEventHandler
+      onPointerover?: PointerEventHandler
+      onPointerout?: PointerEventHandler
+      onGotpointercapture?: PointerEventHandler
+      onLostpointercapture?: PointerEventHandler
 
       // UI Events
       onScroll?: UIEventHandler
-      onScrollCapture?: UIEventHandler
 
       // Wheel Events
       onWheel?: WheelEventHandler
-      onWheelCapture?: WheelEventHandler
 
       // Animation Events
-      onAnimationStart?: AnimationEventHandler
-      onAnimationStartCapture?: AnimationEventHandler
-      onAnimationEnd?: AnimationEventHandler
-      onAnimationEndCapture?: AnimationEventHandler
-      onAnimationIteration?: AnimationEventHandler
-      onAnimationIterationCapture?: AnimationEventHandler
+      onAnimationstart?: AnimationEventHandler
+      onAnimationend?: AnimationEventHandler
+      onAnimationiteration?: AnimationEventHandler
 
       // Transition Events
-      onTransitionEnd?: TransitionEventHandler
-      onTransitionEndCapture?: TransitionEventHandler
+      onTransitionend?: TransitionEventHandler
     }
 
     interface DOMNativeEventListeners {
       // Clipboard Events
       nativeOnCopy?: ClipboardEventHandler
-      nativeOnCopyCapture?: ClipboardEventHandler
       nativeOnCut?: ClipboardEventHandler
-      nativeOnCutCapture?: ClipboardEventHandler
       nativeOnPaste?: ClipboardEventHandler
-      nativeOnPasteCapture?: ClipboardEventHandler
 
       // Composition Events
-      nativeOnCompositionEnd?: CompositionEventHandler
-      nativeOnCompositionEndCapture?: CompositionEventHandler
-      nativeOnCompositionStart?: CompositionEventHandler
-      nativeOnCompositionStartCapture?: CompositionEventHandler
-      nativeOnCompositionUpdate?: CompositionEventHandler
-      nativeOnCompositionUpdateCapture?: CompositionEventHandler
+      nativeOnCompositionend?: CompositionEventHandler
+      nativeOnCompositionstart?: CompositionEventHandler
+      nativeOnCompositionupdate?: CompositionEventHandler
 
       // Focus Events
       nativeOnFocus?: FocusEventHandler
-      nativeOnFocusCapture?: FocusEventHandler
       nativeOnBlur?: FocusEventHandler
-      nativeOnBlurCapture?: FocusEventHandler
 
       // Form Events
       nativeOnChange?: FormEventHandler
-      nativeOnChangeCapture?: FormEventHandler
-      nativeOnBeforeInput?: FormEventHandler
-      nativeOnBeforeInputCapture?: FormEventHandler
+      nativeOnBeforeinput?: FormEventHandler
       nativeOnInput?: FormEventHandler
-      nativeOnInputCapture?: FormEventHandler
       nativeOnReset?: FormEventHandler
-      nativeOnResetCapture?: FormEventHandler
       nativeOnSubmit?: FormEventHandler
-      nativeOnSubmitCapture?: FormEventHandler
       nativeOnInvalid?: FormEventHandler
-      nativeOnInvalidCapture?: FormEventHandler
 
       // Image Events
       nativeOnLoad?: NativeEventHandler
-      nativeOnLoadCapture?: NativeEventHandler
       nativeOnError?: NativeEventHandler // also a Media Event
-      nativeOnErrorCapture?: NativeEventHandler // also a Media Event
 
       // Keyboard Events
-      nativeOnKeyDown?: KeyboardEventHandler
-      nativeOnKeyDownCapture?: KeyboardEventHandler
-      nativeOnKeyPress?: KeyboardEventHandler
-      nativeOnKeyPressCapture?: KeyboardEventHandler
-      nativeOnKeyUp?: KeyboardEventHandler
-      nativeOnKeyUpCapture?: KeyboardEventHandler
+      nativeOnKeydown?: KeyboardEventHandler
+      nativeOnKeypress?: KeyboardEventHandler
+      nativeOnKeyup?: KeyboardEventHandler
 
       // Media Events
       nativeOnAbort?: NativeEventHandler
-      nativeOnAbortCapture?: NativeEventHandler
-      nativeOnCanPlay?: NativeEventHandler
-      nativeOnCanPlayCapture?: NativeEventHandler
-      nativeOnCanPlayThrough?: NativeEventHandler
-      nativeOnCanPlayThroughCapture?: NativeEventHandler
-      nativeOnDurationChange?: NativeEventHandler
-      nativeOnDurationChangeCapture?: NativeEventHandler
+      nativeOnCanplay?: NativeEventHandler
+      nativeOnCanplaythrough?: NativeEventHandler
+      nativeOnDurationchange?: NativeEventHandler
       nativeOnEmptied?: NativeEventHandler
-      nativeOnEmptiedCapture?: NativeEventHandler
       nativeOnEncrypted?: NativeEventHandler
-      nativeOnEncryptedCapture?: NativeEventHandler
       nativeOnEnded?: NativeEventHandler
-      nativeOnEndedCapture?: NativeEventHandler
-      nativeOnLoadedData?: NativeEventHandler
-      nativeOnLoadedDataCapture?: NativeEventHandler
-      nativeOnLoadedMetadata?: NativeEventHandler
-      nativeOnLoadedMetadataCapture?: NativeEventHandler
-      nativeOnLoadStart?: NativeEventHandler
-      nativeOnLoadStartCapture?: NativeEventHandler
+      nativeOnLoadeddata?: NativeEventHandler
+      nativeOnLoadedmetadata?: NativeEventHandler
+      nativeOnLoadstart?: NativeEventHandler
       nativeOnPause?: NativeEventHandler
-      nativeOnPauseCapture?: NativeEventHandler
       nativeOnPlay?: NativeEventHandler
-      nativeOnPlayCapture?: NativeEventHandler
       nativeOnPlaying?: NativeEventHandler
-      nativeOnPlayingCapture?: NativeEventHandler
       nativeOnProgress?: NativeEventHandler
-      nativeOnProgressCapture?: NativeEventHandler
-      nativeOnRateChange?: NativeEventHandler
-      nativeOnRateChangeCapture?: NativeEventHandler
+      nativeOnRatechange?: NativeEventHandler
       nativeOnSeeked?: NativeEventHandler
-      nativeOnSeekedCapture?: NativeEventHandler
       nativeOnSeeking?: NativeEventHandler
-      nativeOnSeekingCapture?: NativeEventHandler
       nativeOnStalled?: NativeEventHandler
-      nativeOnStalledCapture?: NativeEventHandler
       nativeOnSuspend?: NativeEventHandler
-      nativeOnSuspendCapture?: NativeEventHandler
-      nativeOnTimeUpdate?: NativeEventHandler
-      nativeOnTimeUpdateCapture?: NativeEventHandler
-      nativeOnVolumeChange?: NativeEventHandler
-      nativeOnVolumeChangeCapture?: NativeEventHandler
+      nativeOnTimeupdate?: NativeEventHandler
+      nativeOnVolumechange?: NativeEventHandler
       nativeOnWaiting?: NativeEventHandler
-      nativeOnWaitingCapture?: NativeEventHandler
 
       // MouseEvents
-      nativeOnAuxClick?: MouseEventHandler
-      nativeOnAuxClickCapture?: MouseEventHandler
+      nativeOnAuxclick?: MouseEventHandler
       nativeOnClick?: MouseEventHandler
-      nativeOnClickCapture?: MouseEventHandler
-      nativeOnContextMenu?: MouseEventHandler
-      nativeOnContextMenuCapture?: MouseEventHandler
-      nativeOnDoubleClick?: MouseEventHandler
-      nativeOnDoubleClickCapture?: MouseEventHandler
+      nativeOnContextmenu?: MouseEventHandler
+      nativeOnDoubleclick?: MouseEventHandler
       nativeOnDrag?: DragEventHandler
-      nativeOnDragCapture?: DragEventHandler
-      nativeOnDragEnd?: DragEventHandler
-      nativeOnDragEndCapture?: DragEventHandler
-      nativeOnDragEnter?: DragEventHandler
-      nativeOnDragEnterCapture?: DragEventHandler
-      nativeOnDragExit?: DragEventHandler
-      nativeOnDragExitCapture?: DragEventHandler
-      nativeOnDragLeave?: DragEventHandler
-      nativeOnDragLeaveCapture?: DragEventHandler
-      nativeOnDragOver?: DragEventHandler
-      nativeOnDragOverCapture?: DragEventHandler
-      nativeOnDragStart?: DragEventHandler
-      nativeOnDragStartCapture?: DragEventHandler
+      nativeOnDragend?: DragEventHandler
+      nativeOnDragenter?: DragEventHandler
+      nativeOnDragexit?: DragEventHandler
+      nativeOnDragleave?: DragEventHandler
+      nativeOnDragover?: DragEventHandler
+      nativeOnDragstart?: DragEventHandler
       nativeOnDrop?: DragEventHandler
-      nativeOnDropCapture?: DragEventHandler
-      nativeOnMouseDown?: MouseEventHandler
-      nativeOnMouseDownCapture?: MouseEventHandler
-      nativeOnMouseEnter?: MouseEventHandler
-      nativeOnMouseLeave?: MouseEventHandler
-      nativeOnMouseMove?: MouseEventHandler
-      nativeOnMouseMoveCapture?: MouseEventHandler
-      nativeOnMouseOut?: MouseEventHandler
-      nativeOnMouseOutCapture?: MouseEventHandler
-      nativeOnMouseOver?: MouseEventHandler
-      nativeOnMouseOverCapture?: MouseEventHandler
-      nativeOnMouseUp?: MouseEventHandler
-      nativeOnMouseUpCapture?: MouseEventHandler
+      nativeOnMousedown?: MouseEventHandler
+      nativeOnMouseenter?: MouseEventHandler
+      nativeOnMouseleave?: MouseEventHandler
+      nativeOnMousemove?: MouseEventHandler
+      nativeOnMouseout?: MouseEventHandler
+      nativeOnMouseover?: MouseEventHandler
+      nativeOnMouseup?: MouseEventHandler
 
       // Selection Events
       nativeOnSelect?: NativeEventHandler
-      nativeOnSelectCapture?: NativeEventHandler
 
       // Touch Events
-      nativeOnTouchCancel?: TouchEventHandler
-      nativeOnTouchCancelCapture?: TouchEventHandler
-      nativeOnTouchEnd?: TouchEventHandler
-      nativeOnTouchEndCapture?: TouchEventHandler
-      nativeOnTouchMove?: TouchEventHandler
-      nativeOnTouchMoveCapture?: TouchEventHandler
-      nativeOnTouchStart?: TouchEventHandler
-      nativeOnTouchStartCapture?: TouchEventHandler
+      nativeOnTouchcancel?: TouchEventHandler
+      nativeOnTouchend?: TouchEventHandler
+      nativeOnTouchmove?: TouchEventHandler
+      nativeOnTouchstart?: TouchEventHandler
 
       // Pointer Events
-      nativeOnPointerDown?: PointerEventHandler
-      nativeOnPointerDownCapture?: PointerEventHandler
-      nativeOnPointerMove?: PointerEventHandler
-      nativeOnPointerMoveCapture?: PointerEventHandler
-      nativeOnPointerUp?: PointerEventHandler
-      nativeOnPointerUpCapture?: PointerEventHandler
-      nativeOnPointerCancel?: PointerEventHandler
-      nativeOnPointerCancelCapture?: PointerEventHandler
-      nativeOnPointerEnter?: PointerEventHandler
-      nativeOnPointerEnterCapture?: PointerEventHandler
-      nativeOnPointerLeave?: PointerEventHandler
-      nativeOnPointerLeaveCapture?: PointerEventHandler
-      nativeOnPointerOver?: PointerEventHandler
-      nativeOnPointerOverCapture?: PointerEventHandler
-      nativeOnPointerOut?: PointerEventHandler
-      nativeOnPointerOutCapture?: PointerEventHandler
-      nativeOnGotPointerCapture?: PointerEventHandler
-      nativeOnGotPointerCaptureCapture?: PointerEventHandler
-      nativeOnLostPointerCapture?: PointerEventHandler
-      nativeOnLostPointerCaptureCapture?: PointerEventHandler
+      nativeOnPointerdown?: PointerEventHandler
+      nativeOnPointermove?: PointerEventHandler
+      nativeOnPointerup?: PointerEventHandler
+      nativeOnPointercancel?: PointerEventHandler
+      nativeOnPointerenter?: PointerEventHandler
+      nativeOnPointerleave?: PointerEventHandler
+      nativeOnPointerover?: PointerEventHandler
+      nativeOnPointerout?: PointerEventHandler
+      nativeOnGotpointercapture?: PointerEventHandler
+      nativeOnLostpointercapture?: PointerEventHandler
 
       // UI Events
       nativeOnScroll?: UIEventHandler
-      nativeOnScrollCapture?: UIEventHandler
 
       // Wheel Events
       nativeOnWheel?: WheelEventHandler
-      nativeOnWheelCapture?: WheelEventHandler
 
       // Animation Events
-      nativeOnAnimationStart?: AnimationEventHandler
-      nativeOnAnimationStartCapture?: AnimationEventHandler
-      nativeOnAnimationEnd?: AnimationEventHandler
-      nativeOnAnimationEndCapture?: AnimationEventHandler
-      nativeOnAnimationIteration?: AnimationEventHandler
-      nativeOnAnimationIterationCapture?: AnimationEventHandler
+      nativeOnAnimationstart?: AnimationEventHandler
+      nativeOnAnimationend?: AnimationEventHandler
+      nativeOnAnimationiteration?: AnimationEventHandler
 
       // Transition Events
-      nativeOnTransitionEnd?: TransitionEventHandler
-      nativeOnTransitionEndCapture?: TransitionEventHandler
+      nativeOnTransitionend?: TransitionEventHandler
     }
 
     //
@@ -577,193 +419,114 @@ declare global {
     interface NativeEventHandlerMap {
       // Clipboard Events
       copy?: ClipboardEventHandler
-      copyCapture?: ClipboardEventHandler
       cut?: ClipboardEventHandler
-      cutCapture?: ClipboardEventHandler
       paste?: ClipboardEventHandler
-      pasteCapture?: ClipboardEventHandler
 
       // Composition Events
-      compositionEnd?: CompositionEventHandler
-      compositionEndCapture?: CompositionEventHandler
-      compositionStart?: CompositionEventHandler
-      compositionStartCapture?: CompositionEventHandler
-      compositionUpdate?: CompositionEventHandler
-      compositionUpdateCapture?: CompositionEventHandler
+      compositionend?: CompositionEventHandler
+      compositionstart?: CompositionEventHandler
+      compositionupdate?: CompositionEventHandler
 
       // Focus Events
       focus?: FocusEventHandler
-      focusCapture?: FocusEventHandler
       blur?: FocusEventHandler
-      blurCapture?: FocusEventHandler
 
       // Form Events
       change?: FormEventHandler
-      changeCapture?: FormEventHandler
-      beforeInput?: FormEventHandler
-      beforeInputCapture?: FormEventHandler
+      beforeinput?: FormEventHandler
       input?: FormEventHandler
-      inputCapture?: FormEventHandler
       reset?: FormEventHandler
-      resetCapture?: FormEventHandler
       submit?: FormEventHandler
-      submitCapture?: FormEventHandler
       invalid?: FormEventHandler
-      invalidCapture?: FormEventHandler
 
       // Image Events
       load?: NativeEventHandler
-      loadCapture?: NativeEventHandler
       error?: NativeEventHandler // also a Media Event
-      errorCapture?: NativeEventHandler // also a Media Event
 
       // Keyboard Events
-      keyDown?: KeyboardEventHandler
-      keyDownCapture?: KeyboardEventHandler
-      keyPress?: KeyboardEventHandler
-      keyPressCapture?: KeyboardEventHandler
-      keyUp?: KeyboardEventHandler
-      keyUpCapture?: KeyboardEventHandler
+      keydown?: KeyboardEventHandler
+      keypress?: KeyboardEventHandler
+      keyup?: KeyboardEventHandler
 
       // Media Events
       abort?: NativeEventHandler
-      abortCapture?: NativeEventHandler
-      canPlay?: NativeEventHandler
-      canPlayCapture?: NativeEventHandler
-      canPlayThrough?: NativeEventHandler
-      canPlayThroughCapture?: NativeEventHandler
-      durationChange?: NativeEventHandler
-      durationChangeCapture?: NativeEventHandler
+      canplay?: NativeEventHandler
+      canplaythrough?: NativeEventHandler
+      durationchange?: NativeEventHandler
       emptied?: NativeEventHandler
-      emptiedCapture?: NativeEventHandler
       encrypted?: NativeEventHandler
-      encryptedCapture?: NativeEventHandler
       ended?: NativeEventHandler
-      endedCapture?: NativeEventHandler
-      loadedData?: NativeEventHandler
-      loadedDataCapture?: NativeEventHandler
-      loadedMetadata?: NativeEventHandler
-      loadedMetadataCapture?: NativeEventHandler
-      loadStart?: NativeEventHandler
-      loadStartCapture?: NativeEventHandler
+      loadeddata?: NativeEventHandler
+      loadedmetadata?: NativeEventHandler
+      loadstart?: NativeEventHandler
       pause?: NativeEventHandler
-      pauseCapture?: NativeEventHandler
       play?: NativeEventHandler
-      playCapture?: NativeEventHandler
       playing?: NativeEventHandler
-      playingCapture?: NativeEventHandler
       progress?: NativeEventHandler
-      progressCapture?: NativeEventHandler
-      rateChange?: NativeEventHandler
-      rateChangeCapture?: NativeEventHandler
+      ratechange?: NativeEventHandler
       seeked?: NativeEventHandler
-      seekedCapture?: NativeEventHandler
       seeking?: NativeEventHandler
-      seekingCapture?: NativeEventHandler
       stalled?: NativeEventHandler
-      stalledCapture?: NativeEventHandler
       suspend?: NativeEventHandler
-      suspendCapture?: NativeEventHandler
-      timeUpdate?: NativeEventHandler
-      timeUpdateCapture?: NativeEventHandler
-      volumeChange?: NativeEventHandler
-      volumeChangeCapture?: NativeEventHandler
+      timeupdate?: NativeEventHandler
+      volumechange?: NativeEventHandler
       waiting?: NativeEventHandler
-      waitingCapture?: NativeEventHandler
 
       // MouseEvents
-      auxClick?: MouseEventHandler
-      auxClickCapture?: MouseEventHandler
+      auxclick?: MouseEventHandler
       click?: MouseEventHandler
-      clickCapture?: MouseEventHandler
-      contextMenu?: MouseEventHandler
-      contextMenuCapture?: MouseEventHandler
-      doubleClick?: MouseEventHandler
-      doubleClickCapture?: MouseEventHandler
+      contextmenu?: MouseEventHandler
+      doubleclick?: MouseEventHandler
       drag?: DragEventHandler
-      dragCapture?: DragEventHandler
-      dragEnd?: DragEventHandler
-      dragEndCapture?: DragEventHandler
-      dragEnter?: DragEventHandler
-      dragEnterCapture?: DragEventHandler
-      dragExit?: DragEventHandler
-      dragExitCapture?: DragEventHandler
-      dragLeave?: DragEventHandler
-      dragLeaveCapture?: DragEventHandler
-      dragOver?: DragEventHandler
-      dragOverCapture?: DragEventHandler
-      dragStart?: DragEventHandler
-      dragStartCapture?: DragEventHandler
+      dragend?: DragEventHandler
+      dragenter?: DragEventHandler
+      dragexit?: DragEventHandler
+      dragleave?: DragEventHandler
+      dragover?: DragEventHandler
+      dragstart?: DragEventHandler
       drop?: DragEventHandler
-      dropCapture?: DragEventHandler
-      mouseDown?: MouseEventHandler
-      mouseDownCapture?: MouseEventHandler
-      mouseEnter?: MouseEventHandler
-      mouseLeave?: MouseEventHandler
-      mouseMove?: MouseEventHandler
-      mouseMoveCapture?: MouseEventHandler
-      mouseOut?: MouseEventHandler
-      mouseOutCapture?: MouseEventHandler
-      mouseOver?: MouseEventHandler
-      mouseOverCapture?: MouseEventHandler
-      mouseUp?: MouseEventHandler
-      mouseUpCapture?: MouseEventHandler
+      mousedown?: MouseEventHandler
+      mouseenter?: MouseEventHandler
+      mouseleave?: MouseEventHandler
+      mousemove?: MouseEventHandler
+      mouseout?: MouseEventHandler
+      mouseover?: MouseEventHandler
+      mouseup?: MouseEventHandler
 
       // Selection Events
       select?: NativeEventHandler
-      selectCapture?: NativeEventHandler
 
       // Touch Events
-      touchCancel?: TouchEventHandler
-      touchCancelCapture?: TouchEventHandler
-      touchEnd?: TouchEventHandler
-      touchEndCapture?: TouchEventHandler
-      touchMove?: TouchEventHandler
-      touchMoveCapture?: TouchEventHandler
-      touchStart?: TouchEventHandler
-      touchStartCapture?: TouchEventHandler
+      touchcancel?: TouchEventHandler
+      touchend?: TouchEventHandler
+      touchmove?: TouchEventHandler
+      touchstart?: TouchEventHandler
 
       // Pointer Events
-      pointerDown?: PointerEventHandler
-      pointerDownCapture?: PointerEventHandler
-      pointerMove?: PointerEventHandler
-      pointerMoveCapture?: PointerEventHandler
-      pointerUp?: PointerEventHandler
-      pointerUpCapture?: PointerEventHandler
-      pointerCancel?: PointerEventHandler
-      pointerCancelCapture?: PointerEventHandler
-      pointerEnter?: PointerEventHandler
-      pointerEnterCapture?: PointerEventHandler
-      pointerLeave?: PointerEventHandler
-      pointerLeaveCapture?: PointerEventHandler
-      pointerOver?: PointerEventHandler
-      pointerOverCapture?: PointerEventHandler
-      pointerOut?: PointerEventHandler
-      pointerOutCapture?: PointerEventHandler
-      gotPointerCapture?: PointerEventHandler
-      gotPointerCaptureCapture?: PointerEventHandler
-      lostPointerCapture?: PointerEventHandler
-      lostPointerCaptureCapture?: PointerEventHandler
+      pointerdown?: PointerEventHandler
+      pointermove?: PointerEventHandler
+      pointerup?: PointerEventHandler
+      pointercancel?: PointerEventHandler
+      pointerenter?: PointerEventHandler
+      pointerleave?: PointerEventHandler
+      pointerover?: PointerEventHandler
+      pointerout?: PointerEventHandler
+      gotpointercapture?: PointerEventHandler
+      lostpointercapture?: PointerEventHandler
 
       // UI Events
       scroll?: UIEventHandler
-      scrollCapture?: UIEventHandler
 
       // Wheel Events
       wheel?: WheelEventHandler
-      wheelCapture?: WheelEventHandler
 
       // Animation Events
-      animationStart?: AnimationEventHandler
-      animationStartCapture?: AnimationEventHandler
-      animationEnd?: AnimationEventHandler
-      animationEndCapture?: AnimationEventHandler
-      animationIteration?: AnimationEventHandler
-      animationIterationCapture?: AnimationEventHandler
+      animationstart?: AnimationEventHandler
+      animationend?: AnimationEventHandler
+      animationiteration?: AnimationEventHandler
 
       // Transition Events
-      transitionEnd?: TransitionEventHandler
-      transitionEndCapture?: TransitionEventHandler
+      transitionend?: TransitionEventHandler
     }
 
     interface DOMAttributes extends DOMEventListeners, DOMNativeEventListeners {
