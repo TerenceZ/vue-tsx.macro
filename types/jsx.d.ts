@@ -16,6 +16,8 @@ declare global {
   interface SVGFEDropShadowElement extends SVGElement {}
 
   namespace VueJSX {
+    type ElementStyle = CSSProperties | string | (CSSProperties | string)[]
+
     //
     // Vue Attributes
     //
@@ -44,7 +46,7 @@ declare global {
     interface ClassAttributes<T> extends Attributes, DOMNativeEventListeners {
       class?: ClassNames
       staticClass?: string
-      style?: CSSProperties
+      style?: ElementStyle
 
       // data
       on?: Record<string, Function | Function[]>
@@ -57,7 +59,7 @@ declare global {
     interface BuiltinAttributes extends Attributes, DOMNativeEventListeners {
       class?: ClassNames
       staticClass?: string
-      style?: CSSProperties
+      style?: ElementStyle
       attrs?: Record<string, string | number | boolean>
       domProps?: Record<string, string | number | boolean>
       hook?: Record<string, Function>
@@ -1004,7 +1006,7 @@ declare global {
       placeholder?: string
       slot?: string
       spellCheck?: boolean
-      style?: CSSProperties
+      style?: ElementStyle
       tabIndex?: number
       title?: string
 
@@ -1173,7 +1175,7 @@ declare global {
       method?: string
       min?: number | string
       name?: string
-      style?: CSSProperties
+      style?: ElementStyle
       target?: string
       type?: string
       width?: number | string
