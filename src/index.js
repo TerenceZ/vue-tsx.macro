@@ -11,7 +11,7 @@ function transformJSXComponent({ references, babel: { types: t }, state }) {
     functional: transformFunctional,
     type: transformType,
     EVENTS: removeTypes('EVENTS'),
-    STATES: removeTypes('STATES'),
+    STATE: removeTypes('STATE'),
     SLOTS: removeTypes('SLOTS'),
     INJECTIONS: transformInjections,
   }
